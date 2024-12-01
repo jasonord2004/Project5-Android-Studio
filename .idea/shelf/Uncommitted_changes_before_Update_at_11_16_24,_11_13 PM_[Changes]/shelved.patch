@@ -1,0 +1,695 @@
+Index: src/main/java/com/example/project4rupizzeria/ChicagoPizza.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.project4rupizzeria;\n\npublic class ChicagoPizza implements PizzaFactory{\n    @Override\n    public Pizza createBBQChicken() {\n        return null;\n    }\n\n    @Override\n    public Pizza createDeluxe() {\n        return null;\n    }\n\n    @Override\n    public Pizza createMeatzza() {\n        return null;\n    }\n\n    @Override\n    public Pizza createBuildYourOwn() {\n        return null;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/project4rupizzeria/ChicagoPizza.java b/src/main/java/com/example/project4rupizzeria/ChicagoPizza.java
+--- a/src/main/java/com/example/project4rupizzeria/ChicagoPizza.java	(revision 96640e242a4d597efe1a19d580120bc6edb679e7)
++++ b/src/main/java/com/example/project4rupizzeria/ChicagoPizza.java	(date 1731814562752)
+@@ -1,23 +1,28 @@
+ package com.example.project4rupizzeria;
+ 
++import java.util.ArrayList;
++import java.util.Arrays;
++
+ public class ChicagoPizza implements PizzaFactory{
++
++
+     @Override
+     public Pizza createBBQChicken() {
+-        return null;
++        return new BBQChicken(new ArrayList<>(Arrays.asList(Topping.BBQ_CHICKEN, Topping.GREEN_PEPPER, Topping.PROVOLONE, Topping.CHEDDAR)), Crust.PAN);
+     }
+ 
+     @Override
+     public Pizza createDeluxe() {
+-        return null;
++        return new Deluxe(new ArrayList<>(Arrays.asList(Topping.SAUSAGE, Topping.PEPPERONI, Topping.GREEN_PEPPER, Topping.ONION, Topping.MUSHROOM)), Crust.DEEP_DISH);
+     }
+ 
+     @Override
+     public Pizza createMeatzza() {
+-        return null;
++        return new Meatzza(new ArrayList<>(Arrays.asList(Topping.SAUSAGE, Topping.PEPPERONI, Topping.BEEF, Topping.HAM)), Crust.STUFFED);
+     }
+ 
+     @Override
+     public Pizza createBuildYourOwn() {
+-        return null;
++        return new BuildYourOwn(Crust.PAN);
+     }
+ }
+Index: src/main/java/com/example/project4rupizzeria/HelloApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.project4rupizzeria;\n\nimport javafx.application.Application;\nimport javafx.fxml.FXMLLoader;\nimport javafx.scene.Scene;\nimport javafx.stage.Stage;\n\nimport java.io.IOException;\n\npublic class HelloApplication extends Application {\n    @Override\n    public void start(Stage stage) throws IOException {\n        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(\"hello-view.fxml\"));\n        Scene scene = new Scene(fxmlLoader.load(), 500, 500);\n        stage.setTitle(\"Hello!\");\n        stage.setScene(scene);\n        stage.show();\n    }\n\n    public static void main(String[] args) {\n        launch();\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/project4rupizzeria/HelloApplication.java b/src/main/java/com/example/project4rupizzeria/HelloApplication.java
+--- a/src/main/java/com/example/project4rupizzeria/HelloApplication.java	(revision 96640e242a4d597efe1a19d580120bc6edb679e7)
++++ b/src/main/java/com/example/project4rupizzeria/HelloApplication.java	(date 1731814562755)
+@@ -12,7 +12,7 @@
+     public void start(Stage stage) throws IOException {
+         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+-        stage.setTitle("Hello!");
++        stage.setTitle("Welcome!");
+         stage.setScene(scene);
+         stage.show();
+     }
+Index: src/main/java/com/example/project4rupizzeria/Pizza.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.project4rupizzeria;\nimport java.util.ArrayList;\n\npublic abstract class Pizza {\n    private ArrayList<Topping> toppings; //Topping is a Enum class\n    private Crust crust; //Crust is a Enum class\n    private Size size; //Size is a Enum class\n    public abstract double price();\n\n    public Pizza (ArrayList<Topping> toppings, Crust crust, Size size) {\n        this.toppings = toppings;\n        this.crust = crust;\n        this.size = size;\n    }\n\n    public Pizza (){}\n\n    public void addTopping(Topping topping){\n        toppings.add(topping);\n    }\n    \n    public void removeTopping(Topping topping){\n        for(int i = 0; i < toppings.size(); i++){\n            if (toppings.get(i).equals(topping)){\n                toppings.remove(i);\n                break;\n            }\n        }\n    }\n\n    public ArrayList<Topping> getToppings() {\n        return toppings;\n    }\n\n    public Crust getCrust() {\n        return crust;\n    }\n\n    public void setCrust(Crust crust) {\n        this.crust = crust;\n    }\n\n    public Size getSize(){\n        return size;\n    }\n\n    public void setSize(Size size){\n        this.size = size;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/project4rupizzeria/Pizza.java b/src/main/java/com/example/project4rupizzeria/Pizza.java
+--- a/src/main/java/com/example/project4rupizzeria/Pizza.java	(revision 96640e242a4d597efe1a19d580120bc6edb679e7)
++++ b/src/main/java/com/example/project4rupizzeria/Pizza.java	(date 1731814562757)
+@@ -13,6 +13,16 @@
+         this.size = size;
+     }
+ 
++    public Pizza (ArrayList<Topping> toppings, Crust crust){
++        this.toppings = toppings;
++        this.crust = crust;
++    }
++
++    public Pizza (Crust crust){
++        this.toppings = new ArrayList<>();
++        this.crust = crust;
++    }
++
+     public Pizza (){}
+ 
+     public void addTopping(Topping topping){
+Index: src/main/java/com/example/project4rupizzeria/ChicagoPizzaController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.project4rupizzeria;\n\nimport javafx.collections.FXCollections;\nimport javafx.collections.ObservableList;\nimport javafx.event.ActionEvent;\nimport javafx.event.EventHandler;\nimport javafx.fxml.FXML;\nimport javafx.scene.control.Button;\nimport javafx.scene.control.ComboBox;\nimport javafx.scene.control.ListView;\nimport javafx.scene.control.RadioButton;\nimport javafx.scene.control.TextField;\nimport javafx.scene.image.ImageView;\nimport javafx.scene.input.MouseEvent;\n\npublic class ChicagoPizzaController {\n\n    @FXML\n    private Button AddToOrderButton;\n\n    @FXML\n    private Button AddToppingsButton;\n\n    @FXML\n    private ListView<Topping> AvailableToppingsListView;\n\n    @FXML\n    private ImageView CSPizzaImage;\n\n    @FXML\n    private TextField CrustTextField;\n\n    @FXML\n    private RadioButton LRadioButton;\n\n    @FXML\n    private RadioButton MRadioButton;\n\n    @FXML\n    private Button RemoveToppingsButton;\n\n    @FXML\n    private RadioButton SRadioButton;\n\n    @FXML\n    private ListView<Topping> SelectedToppingsListView;\n\n    @FXML\n    private TextField TotalPriceTextField;\n\n    @FXML\n    private ComboBox<String> TypeComboBox;\n\n    public void initialize(){\n        fillTypes();\n        TypeComboBox.setOnAction(new EventHandler<ActionEvent>() {\n            @Override\n            public void handle(ActionEvent actionEvent) {\n                setCrust();\n                setToppings();\n            }\n        });\n    }\n\n    @FXML\n    void fillTypes(){\n        String[] types = {\"Build Your Own\", \"BBQ Chicken\", \"Deluxe\", \"Meatzza\"};\n        TypeComboBox.getItems().addAll(types);\n    }\n\n\n    @FXML\n    void largeSelected(MouseEvent event){\n        SRadioButton.setSelected(false);\n        MRadioButton.setSelected(false);\n    }\n\n    @FXML\n    void mediumSelected(MouseEvent event){\n        LRadioButton.setSelected(false);\n        SRadioButton.setSelected(false);\n    }\n\n    @FXML\n    void smallSelected(MouseEvent event){\n        LRadioButton.setSelected(false);\n        MRadioButton.setSelected(false);\n    }\n\n    void setCrust(){\n        switch(TypeComboBox.getValue()){\n            case \"Build Your Own\": CrustTextField.setText(\"Pan\"); break;\n            case \"BBQ Chicken\": CrustTextField.setText(\"Pan\"); break;\n            case \"Deluxe\": CrustTextField.setText(\"Deep Dish\"); break;\n            case \"Meatzza\": CrustTextField.setText(\"Stuffed\"); break;\n            default: break;\n        }\n    }\n\n    void setToppings(){\n        ObservableList<Topping> toppings = FXCollections.observableArrayList(Topping.values());\n        switch(TypeComboBox.getValue()){\n            case \"Build Your Own\":\n                SelectedToppingsListView.setItems(null);\n                AvailableToppingsListView.setItems(toppings);\n                break;\n            case \"BBQ Chicken\": CrustTextField.setText(\"Pan\");\n                AvailableToppingsListView.setItems(null);\n                toppings = FXCollections.observableArrayList(Topping.BBQ_CHICKEN, Topping.GREEN_PEPPER, Topping.PROVOLONE, Topping.CHEDDAR);\n                SelectedToppingsListView.setItems(toppings);\n                break;\n            case \"Deluxe\": CrustTextField.setText(\"Deep Dish\");\n                AvailableToppingsListView.setItems(null);\n                toppings = FXCollections.observableArrayList(Topping.SAUSAGE, Topping.PEPPERONI, Topping.GREEN_PEPPER, Topping.ONION, Topping.MUSHROOM);\n                SelectedToppingsListView.setItems(toppings);\n                break;\n            case \"Meatzza\": CrustTextField.setText(\"Stuffed\");\n                AvailableToppingsListView.setItems(null);\n                toppings = FXCollections.observableArrayList(Topping.SAUSAGE, Topping.PEPPERONI, Topping.BEEF, Topping.HAM);\n                SelectedToppingsListView.setItems(toppings);\n                break;\n            default: break;\n        }\n    }\n\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/project4rupizzeria/ChicagoPizzaController.java b/src/main/java/com/example/project4rupizzeria/ChicagoPizzaController.java
+--- a/src/main/java/com/example/project4rupizzeria/ChicagoPizzaController.java	(revision 96640e242a4d597efe1a19d580120bc6edb679e7)
++++ b/src/main/java/com/example/project4rupizzeria/ChicagoPizzaController.java	(date 1731816514168)
+@@ -5,13 +5,16 @@
+ import javafx.event.ActionEvent;
+ import javafx.event.EventHandler;
+ import javafx.fxml.FXML;
+-import javafx.scene.control.Button;
+-import javafx.scene.control.ComboBox;
+-import javafx.scene.control.ListView;
+-import javafx.scene.control.RadioButton;
+-import javafx.scene.control.TextField;
++import javafx.scene.control.*;
++import javafx.scene.image.Image;
+ import javafx.scene.image.ImageView;
+ import javafx.scene.input.MouseEvent;
++import javafx.scene.layout.VBox;
++
++import java.io.FileInputStream;
++import java.io.FileNotFoundException;
++import java.io.IOException;
++import java.net.Proxy;
+ 
+ public class ChicagoPizzaController {
+ 
+@@ -51,16 +54,50 @@
+     @FXML
+     private ComboBox<String> TypeComboBox;
+ 
++    private PizzaFactory pizzaFactory;
++    private Pizza pizza;
++
++
+     public void initialize(){
+         fillTypes();
++        setDisable();
+         TypeComboBox.setOnAction(new EventHandler<ActionEvent>() {
+             @Override
+             public void handle(ActionEvent actionEvent) {
++                setEnable();
++                CrustTextField.setEditable(false);
++                TotalPriceTextField.setEditable(false);
++                pizzaFactory = new ChicagoPizza();
+                 setCrust();
++                setPicture();
+                 setToppings();
++                setPizza();
++                setTotalPrice();
+             }
+         });
+     }
++
++    private void setDisable(){
++        LRadioButton.setDisable(true);
++        MRadioButton.setDisable(true);
++        SRadioButton.setDisable(true);
++        AddToOrderButton.setDisable(true);
++        AddToppingsButton.setDisable(true);
++        RemoveToppingsButton.setDisable(true);
++        CrustTextField.setDisable(true);
++        TotalPriceTextField.setDisable(true);
++    }
++
++    private void setEnable(){
++        LRadioButton.setDisable(false);
++        MRadioButton.setDisable(false);
++        SRadioButton.setDisable(false);
++        AddToOrderButton.setDisable(false);
++        AddToppingsButton.setDisable(false);
++        RemoveToppingsButton.setDisable(false);
++        CrustTextField.setDisable(false);
++        TotalPriceTextField.setDisable(false);
++    }
+ 
+     @FXML
+     void fillTypes(){
+@@ -73,23 +110,35 @@
+     void largeSelected(MouseEvent event){
+         SRadioButton.setSelected(false);
+         MRadioButton.setSelected(false);
++        pizza.setSize(sizeSelected());
++        setTotalPrice();
+     }
+ 
+     @FXML
+     void mediumSelected(MouseEvent event){
+         LRadioButton.setSelected(false);
+         SRadioButton.setSelected(false);
++        pizza.setSize(sizeSelected());
++        setTotalPrice();
+     }
+ 
+     @FXML
+     void smallSelected(MouseEvent event){
+         LRadioButton.setSelected(false);
+         MRadioButton.setSelected(false);
++        pizza.setSize(sizeSelected());
++        setTotalPrice();
++    }
++
++    private Size sizeSelected(){
++        if(LRadioButton.isSelected()) return Size.LARGE;
++        else if(MRadioButton.isSelected()) return Size.MEDIUM;
++        else return Size.SMALL;
+     }
+ 
+     void setCrust(){
+         switch(TypeComboBox.getValue()){
+-            case "Build Your Own": CrustTextField.setText("Pan"); break;
++            case "Build Your Own": CrustTextField.setText("Pan");break;
+             case "BBQ Chicken": CrustTextField.setText("Pan"); break;
+             case "Deluxe": CrustTextField.setText("Deep Dish"); break;
+             case "Meatzza": CrustTextField.setText("Stuffed"); break;
+@@ -97,6 +146,33 @@
+         }
+     }
+ 
++    void setPicture(){
++        try {
++            switch (TypeComboBox.getValue()) {
++                case "Build Your Own":
++                    Image yourOwn = new Image(getClass().getResource("Build-Your-Own-CSP.jpg").openStream());
++                    CSPizzaImage.setImage(yourOwn);
++                    break;
++                case "BBQ Chicken":
++                    Image bbq = new Image(getClass().getResource("BBQ-CSP.jpg").openStream());
++                    CSPizzaImage.setImage(bbq);
++                    break;
++                case "Deluxe":
++                    Image deluxe = new Image(getClass().getResource("Deluxe-CSP.jpg").openStream());
++                    CSPizzaImage.setImage(deluxe);
++                    break;
++                case "Meatzza":
++                    Image meatzza = new Image(getClass().getResource("Meatzza-CSP.jpg").openStream());
++                    CSPizzaImage.setImage(meatzza);
++                    break;
++                default:
++                    break;
++            }
++        }
++        catch (IOException e) { createAlert("FileNotFoundException", "Image Not Found", "Please insert a valid path to the image.");}
++        catch (NullPointerException e) {createAlert("NullPointerException", "Image Not Found", "Please insert a valid path to the image.");}
++    }
++
+     void setToppings(){
+         ObservableList<Topping> toppings = FXCollections.observableArrayList(Topping.values());
+         switch(TypeComboBox.getValue()){
+@@ -104,24 +180,100 @@
+                 SelectedToppingsListView.setItems(null);
+                 AvailableToppingsListView.setItems(toppings);
+                 break;
+-            case "BBQ Chicken": CrustTextField.setText("Pan");
++            case "BBQ Chicken":
+                 AvailableToppingsListView.setItems(null);
+                 toppings = FXCollections.observableArrayList(Topping.BBQ_CHICKEN, Topping.GREEN_PEPPER, Topping.PROVOLONE, Topping.CHEDDAR);
+                 SelectedToppingsListView.setItems(toppings);
++                SelectedToppingsListView.setEditable(false);
+                 break;
+-            case "Deluxe": CrustTextField.setText("Deep Dish");
++            case "Deluxe":
+                 AvailableToppingsListView.setItems(null);
+                 toppings = FXCollections.observableArrayList(Topping.SAUSAGE, Topping.PEPPERONI, Topping.GREEN_PEPPER, Topping.ONION, Topping.MUSHROOM);
+                 SelectedToppingsListView.setItems(toppings);
++                SelectedToppingsListView.setEditable(false);
+                 break;
+-            case "Meatzza": CrustTextField.setText("Stuffed");
++            case "Meatzza":
+                 AvailableToppingsListView.setItems(null);
+                 toppings = FXCollections.observableArrayList(Topping.SAUSAGE, Topping.PEPPERONI, Topping.BEEF, Topping.HAM);
+                 SelectedToppingsListView.setItems(toppings);
++                SelectedToppingsListView.setEditable(false);
+                 break;
+             default: break;
+         }
+     }
+ 
++    @FXML
++    void addSelectedToppings(){
++        if(!TypeComboBox.getValue().equals("Build Your Own")) return;
++        Topping addTopping = AvailableToppingsListView.getSelectionModel().getSelectedItem();
++        try{
++            if (addTopping == null) return;
++            else if (SelectedToppingsListView.getItems().size() >= 7) {
++                createAlert("Pizza Toppings Limit", "Toppings Limit!", "Maximum of 7 Toppings on a Pizza");
++                return;
++            }
++        }
++        catch (NullPointerException e) {
++            SelectedToppingsListView.setItems(FXCollections.observableArrayList(addTopping));
++            AvailableToppingsListView.getItems().remove(addTopping);
++            setPizza();
++            pizza.addTopping(addTopping);
++            setTotalPrice();
++            return;
++        }
++        ObservableList<Topping> toppings = FXCollections.observableArrayList(SelectedToppingsListView.getItems());
++        toppings.add(addTopping);
++        SelectedToppingsListView.setItems(toppings);
++        AvailableToppingsListView.getItems().remove(addTopping);
++        pizza.addTopping(addTopping);
++        setTotalPrice();
++    }
++
++    private void createAlert(String title, String header, String content){
++        Alert alert = new Alert(Alert.AlertType.INFORMATION);
++        alert.setTitle(title);
++        alert.setHeaderText(header);
++        alert.setContentText(content);
++        alert.showAndWait();
++    }
++
++    @FXML
++    void removeSelectedToppings(){
++        if(!TypeComboBox.getValue().equals("Build Your Own")) return;
++        try {
++            Topping removeTopping = SelectedToppingsListView.getSelectionModel().getSelectedItem();
++            if (removeTopping != null) {
++                SelectedToppingsListView.getItems().remove(removeTopping);
++                AvailableToppingsListView.getItems().add(removeTopping);
++                pizza.removeTopping(removeTopping);
++            }
++        } catch (NullPointerException exception) { return;}
++        setTotalPrice();
++    }
++
++    public void setPizza(){
++        switch(TypeComboBox.getValue()){
++            case "Build Your Own": pizza = pizzaFactory.createBuildYourOwn(); break;
++            case "BBQ Chicken": pizza = pizzaFactory.createBBQChicken(); break;
++            case "Deluxe": pizza = pizzaFactory.createDeluxe(); break;
++            case "Meatzza": pizza = pizzaFactory.createMeatzza(); break;
++            default: break;
++        }
++    }
++
++    @FXML
++    void setTotalPrice(){
++        pizza.setSize(sizeSelected());
++        TotalPriceTextField.setText("$" + String.format("%.2f", pizza.price()));
++    }
++
++    @FXML
++    void addToOrderSelected(MouseEvent event){
++        System.out.println(pizza);
++        System.out.println("Crust: " + pizza.getCrust() + " Size: " + pizza.getSize() + " Toppings: " + pizza.getToppings() + " Price: " + "$" + String.format("%.2f", pizza.price()));
++        CurrentOrderController.pizzas.add(pizza);
++        System.out.println(CurrentOrderController.pizzas);
++    }
++
+ }
+ 
+Index: src/main/java/com/example/project4rupizzeria/BuildYourOwn.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.project4rupizzeria;\n\nimport java.util.ArrayList;\n\npublic class BuildYourOwn extends Pizza{\n    private static final double SPRICE = 8.99;\n    private static final double MPRICE = 10.99;\n    private static final double LPRICE = 12.99;\n    private static final double TOPPING = 1.69;\n\n    public BuildYourOwn(ArrayList<Topping> toppings, Crust crust, Size size) {\n        super(toppings, crust, size);\n    }\n\n    @Override\n    public double price() {\n        double price;\n        if(getSize().toString().equals(\"SMALL\")){ price = SPRICE;}\n        else if (getSize().toString().equals(\"MEDIUM\")){ price = MPRICE;}\n        else if (getSize().toString().equals(\"LARGE\")){ price = LPRICE;}\n        else { return 0;}\n\n        return price + getToppings().size() * TOPPING;\n\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/project4rupizzeria/BuildYourOwn.java b/src/main/java/com/example/project4rupizzeria/BuildYourOwn.java
+--- a/src/main/java/com/example/project4rupizzeria/BuildYourOwn.java	(revision 96640e242a4d597efe1a19d580120bc6edb679e7)
++++ b/src/main/java/com/example/project4rupizzeria/BuildYourOwn.java	(date 1731814562747)
+@@ -8,9 +8,7 @@
+     private static final double LPRICE = 12.99;
+     private static final double TOPPING = 1.69;
+ 
+-    public BuildYourOwn(ArrayList<Topping> toppings, Crust crust, Size size) {
+-        super(toppings, crust, size);
+-    }
++    public BuildYourOwn(Crust crust) {super(crust);}
+ 
+     @Override
+     public double price() {
+@@ -19,9 +17,11 @@
+         else if (getSize().toString().equals("MEDIUM")){ price = MPRICE;}
+         else if (getSize().toString().equals("LARGE")){ price = LPRICE;}
+         else { return 0;}
+-
+-        return price + getToppings().size() * TOPPING;
+-
++        try {
++            return price + (getToppings().size() * TOPPING);
++        } catch (NullPointerException e) {
++            return price;
++        }
+     }
+ 
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"6d271dec-9b76-48f8-bd57-682b63a06bfb\" name=\"Changes\" comment=\"\">\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/CurrentOrderController.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/CurrentOrder.java\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/OrdersPlacedController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/OrdersPlacedController.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/current-order-view.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/current-order-view.fxml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/orders-placed-view.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/orders-placed-view.fxml\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Class\" />\n        <option value=\"FxmlFile\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GitHubPullRequestSearchHistory\">{\n  &quot;lastFilter&quot;: {\n    &quot;state&quot;: &quot;OPEN&quot;,\n    &quot;assignee&quot;: &quot;jasonord2004&quot;\n  }\n}</component>\n  <component name=\"GithubPullRequestsUISettings\"><![CDATA[{\n  \"selectedUrlAndAccountId\": {\n    \"url\": \"https://github.com/jasonord2004/Project4-RUPizzeria.git\",\n    \"accountId\": \"805065c5-e080-4768-812f-a266a74bd02d\"\n  }\n}]]></component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;associatedIndex&quot;: 8\n}</component>\n  <component name=\"ProjectId\" id=\"2olZMJiyPW1G5goSwWX66AUia95\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"Application.HelloApplication.executor\": \"Run\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"git-widget-placeholder\": \"master\",\n    \"kotlin-language-version-configured\": \"true\",\n    \"last_opened_file_path\": \"C:/Users/vaish/Downloads/EventHandlerInterface/EventHandlerInterface\",\n    \"node.js.detected.package.eslint\": \"true\",\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\n    \"nodejs_package_manager_path\": \"npm\",\n    \"project.structure.last.edited\": \"SDKs\",\n    \"project.structure.proportion\": \"0.15429688\",\n    \"project.structure.side.proportion\": \"0.2\",\n    \"settings.editor.selected.configurable\": \"vcs.Subversion\",\n    \"vue.rearranger.settings.migration\": \"true\"\n  }\n}]]></component>\n  <component name=\"RecentsManager\">\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria\" />\n    </key>\n  </component>\n  <component name=\"RunManager\">\n    <configuration name=\"HelloApplication\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"ALTERNATIVE_JRE_PATH\" value=\"23\" />\n      <option name=\"ALTERNATIVE_JRE_PATH_ENABLED\" value=\"true\" />\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.project4rupizzeria.HelloApplication\" />\n      <module name=\"Project4-RUPizzeria\" />\n      <option name=\"VM_PARAMETERS\" value=\"--module-path &quot;$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib&quot; --add-modules javafx.controls,javafx.fxml \" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"com.example.project4rupizzeria.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"Application.HelloApplication\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"SvnConfiguration\">\n    <configuration>$USER_HOME$/.subversion</configuration>\n  </component>\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"6d271dec-9b76-48f8-bd57-682b63a06bfb\" name=\"Changes\" comment=\"\" />\n      <created>1731446073960</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1731446073960</updated>\n      <workItem from=\"1731446075136\" duration=\"9062000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\n    <expand />\n    <select />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 96640e242a4d597efe1a19d580120bc6edb679e7)
++++ b/.idea/workspace.xml	(date 1731815881292)
+@@ -5,12 +5,21 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="6d271dec-9b76-48f8-bd57-682b63a06bfb" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/CurrentOrderController.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/BBQ-CSP.jpg" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/Build-Your-Own-CSP.jpg" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/Deluxe-CSP.jpg" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/Meatzza-CSP.jpg" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/CurrentOrder.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/OrdersPlacedController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/OrdersPlacedController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/current-order-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/current-order-view.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/orders-placed-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/orders-placed-view.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/BBQChicken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/BBQChicken.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/BuildYourOwn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/BuildYourOwn.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/ChicagoPizza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/ChicagoPizza.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/ChicagoPizzaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/ChicagoPizzaController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/Deluxe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/Deluxe.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/HelloApplication.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/HelloController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/Meatzza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/Meatzza.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/Pizza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/project4rupizzeria/Pizza.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/chicago-pizza-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria/chicago-pizza-view.fxml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -34,12 +43,12 @@
+     &quot;assignee&quot;: &quot;jasonord2004&quot;
+   }
+ }</component>
+-  <component name="GithubPullRequestsUISettings"><![CDATA[{
+-  "selectedUrlAndAccountId": {
+-    "url": "https://github.com/jasonord2004/Project4-RUPizzeria.git",
+-    "accountId": "805065c5-e080-4768-812f-a266a74bd02d"
+-  }
+-}]]></component>
++  <component name="GithubPullRequestsUISettings">{
++  &quot;selectedUrlAndAccountId&quot;: {
++    &quot;url&quot;: &quot;https://github.com/jasonord2004/Project4-RUPizzeria.git&quot;,
++    &quot;accountId&quot;: &quot;805065c5-e080-4768-812f-a266a74bd02d&quot;
++  }
++}</component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 8
+ }</component>
+@@ -49,24 +58,24 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Application.HelloApplication.executor": "Run",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "git-widget-placeholder": "master",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "C:/Users/vaish/Downloads/EventHandlerInterface/EventHandlerInterface",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "project.structure.last.edited": "SDKs",
+-    "project.structure.proportion": "0.15429688",
+-    "project.structure.side.proportion": "0.2",
+-    "settings.editor.selected.configurable": "vcs.Subversion",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/vaish/Downloads/EventHandlerInterface/EventHandlerInterface&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Subversion&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="MoveFile.RECENT_KEYS">
+       <recent name="$PROJECT_DIR$/src/main/resources/com/example/project4rupizzeria" />
+Index: src/main/java/com/example/project4rupizzeria/Meatzza.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.project4rupizzeria;\n\nimport java.util.ArrayList;\n\npublic class Meatzza extends Pizza{\n    private static final double SPRICE = 17.99;\n    private static final double MPRICE = 19.99;\n    private static final double LPRICE = 21.99;\n\n    public Meatzza(ArrayList<Topping> toppings, Crust crust, Size size) {\n        super(toppings, crust, size);\n    }\n\n    @Override\n    public double price() {\n        if(getSize().toString().equals(\"SMALL\")){\n            return SPRICE;\n        } else if (getSize().toString().equals(\"MEDIUM\")){\n            return MPRICE;\n        } else if (getSize().toString().equals(\"LARGE\")){\n            return LPRICE;\n        } else {\n            return 0;\n        }\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/project4rupizzeria/Meatzza.java b/src/main/java/com/example/project4rupizzeria/Meatzza.java
+--- a/src/main/java/com/example/project4rupizzeria/Meatzza.java	(revision 96640e242a4d597efe1a19d580120bc6edb679e7)
++++ b/src/main/java/com/example/project4rupizzeria/Meatzza.java	(date 1731814562757)
+@@ -7,8 +7,8 @@
+     private static final double MPRICE = 19.99;
+     private static final double LPRICE = 21.99;
+ 
+-    public Meatzza(ArrayList<Topping> toppings, Crust crust, Size size) {
+-        super(toppings, crust, size);
++    public Meatzza(ArrayList<Topping> toppings, Crust crust) {
++        super(toppings, crust);
+     }
+ 
+     @Override
+Index: src/main/java/com/example/project4rupizzeria/BBQChicken.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.project4rupizzeria;\n\nimport java.util.ArrayList;\n\npublic class BBQChicken extends Pizza{\n    private static final double SPRICE = 14.99;\n    private static final double MPRICE = 16.99;\n    private static final double LPRICE = 19.99;\n\n    public BBQChicken(ArrayList<Topping> toppings, Crust crust, Size size) {\n        super(toppings, crust, size);\n    }\n\n    @Override\n    public double price() {\n        if(getSize().toString().equals(\"SMALL\")){\n            return SPRICE;\n        } else if (getSize().toString().equals(\"MEDIUM\")){\n            return MPRICE;\n        } else if (getSize().toString().equals(\"LARGE\")){\n            return LPRICE;\n        } else {\n            return 0;\n        }\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/project4rupizzeria/BBQChicken.java b/src/main/java/com/example/project4rupizzeria/BBQChicken.java
+--- a/src/main/java/com/example/project4rupizzeria/BBQChicken.java	(revision 96640e242a4d597efe1a19d580120bc6edb679e7)
++++ b/src/main/java/com/example/project4rupizzeria/BBQChicken.java	(date 1731814562747)
+@@ -1,5 +1,6 @@
+ package com.example.project4rupizzeria;
+ 
++import java.lang.reflect.Array;
+ import java.util.ArrayList;
+ 
+ public class BBQChicken extends Pizza{
+@@ -7,9 +8,10 @@
+     private static final double MPRICE = 16.99;
+     private static final double LPRICE = 19.99;
+ 
+-    public BBQChicken(ArrayList<Topping> toppings, Crust crust, Size size) {
+-        super(toppings, crust, size);
+-    }
++   // public BBQChicken(ArrayList<Topping> toppings, Crust crust, Size size) {
++       // super(toppings, crust, size);
++   // }
++    public BBQChicken(ArrayList<Topping> toppings, Crust crust) { super(toppings, crust); }
+ 
+     @Override
+     public double price() {
+Index: src/main/java/com/example/project4rupizzeria/HelloController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.project4rupizzeria;\n\nimport javafx.fxml.FXML;\nimport javafx.fxml.FXMLLoader;\nimport javafx.scene.Node;\nimport javafx.scene.Parent;\nimport javafx.scene.Scene;\nimport javafx.scene.image.ImageView;\nimport javafx.scene.input.MouseEvent;\nimport javafx.stage.Stage;\n\nimport java.io.IOException;\n\npublic class HelloController {\n\n    private Stage stage;\n    private Scene scene;\n    private Parent root;\n\n    @FXML\n    private ImageView Chicago_Style_Pizza;\n\n    @FXML\n    private ImageView Current_Order;\n\n    @FXML\n    private ImageView NY_Style_Pizza;\n\n    @FXML\n    private ImageView Orders_Placed;\n\n    @FXML\n    public void onChicagoPizzaClicked(MouseEvent event) throws IOException {\n        Parent root = FXMLLoader.load(getClass().getResource(\"chicago-pizza-view.fxml\"));\n        stage =  (Stage)((Node) event.getSource()).getScene().getWindow();\n        scene = new Scene(root);\n        stage.setScene(scene);\n        stage.show();\n    }\n\n    @FXML\n    void onCurrentOrderClicked(MouseEvent event) {\n\n    }\n\n    @FXML\n    void onNYPizzaClicked(MouseEvent event) throws IOException{\n        Parent root = FXMLLoader.load(getClass().getResource(\"NY-pizza-view.fxml\"));\n        stage = (Stage)((Node) event.getSource()).getScene().getWindow();\n        scene = new Scene(root);\n        stage.setScene(scene);\n        stage.show();\n    }\n\n    @FXML\n    void onOrdersPlacedClicked(MouseEvent event) {\n\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/project4rupizzeria/HelloController.java b/src/main/java/com/example/project4rupizzeria/HelloController.java
+--- a/src/main/java/com/example/project4rupizzeria/HelloController.java	(revision 96640e242a4d597efe1a19d580120bc6edb679e7)
++++ b/src/main/java/com/example/project4rupizzeria/HelloController.java	(date 1731814562756)
+@@ -33,6 +33,7 @@
+     public void onChicagoPizzaClicked(MouseEvent event) throws IOException {
+         Parent root = FXMLLoader.load(getClass().getResource("chicago-pizza-view.fxml"));
+         stage =  (Stage)((Node) event.getSource()).getScene().getWindow();
++        stage.setTitle("Chicago Style Pizza Editor");
+         scene = new Scene(root);
+         stage.setScene(scene);
+         stage.show();
+Index: src/main/resources/com/example/project4rupizzeria/chicago-pizza-view.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<?import javafx.geometry.Insets?>\n<?import javafx.scene.control.Button?>\n<?import javafx.scene.control.ComboBox?>\n<?import javafx.scene.control.Label?>\n<?import javafx.scene.control.ListView?>\n<?import javafx.scene.control.RadioButton?>\n<?import javafx.scene.control.TextField?>\n<?import javafx.scene.image.ImageView?>\n<?import javafx.scene.layout.ColumnConstraints?>\n<?import javafx.scene.layout.GridPane?>\n<?import javafx.scene.layout.RowConstraints?>\n<?import javafx.scene.layout.VBox?>\n<?import javafx.scene.text.Font?>\n\n<VBox alignment=\"TOP_CENTER\" maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\" prefHeight=\"500.0\" prefWidth=\"500.0\" style=\"-fx-background-color: ffeed2;\" xmlns=\"http://javafx.com/javafx/23.0.1\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"com.example.project4rupizzeria.ChicagoPizzaController\">\n   <children>\n      <Label alignment=\"TOP_LEFT\" text=\"Chicago Style Pizza\" underline=\"true\">\n         <font>\n            <Font name=\"Baloo Bhai 2 Bold\" size=\"36.0\" />\n         </font>\n         <VBox.margin>\n            <Insets bottom=\"25.0\" left=\"25.0\" right=\"25.0\" top=\"25.0\" />\n         </VBox.margin>\n      </Label>\n      <GridPane prefHeight=\"419.0\" prefWidth=\"500.0\">\n        <columnConstraints>\n          <ColumnConstraints hgrow=\"SOMETIMES\" maxWidth=\"267.88909912109375\" minWidth=\"10.0\" prefWidth=\"216.9585723876953\" />\n            <ColumnConstraints hgrow=\"SOMETIMES\" maxWidth=\"158.0\" minWidth=\"3.11090087890625\" prefWidth=\"67.54142761230469\" />\n          <ColumnConstraints hgrow=\"SOMETIMES\" maxWidth=\"241.0\" minWidth=\"10.0\" prefWidth=\"216.61141967773438\" />\n        </columnConstraints>\n        <rowConstraints>\n          <RowConstraints maxHeight=\"187.0\" minHeight=\"10.0\" prefHeight=\"142.43002319335938\" vgrow=\"SOMETIMES\" />\n          <RowConstraints maxHeight=\"336.0\" minHeight=\"10.0\" prefHeight=\"245.06997680664062\" vgrow=\"SOMETIMES\" />\n        </rowConstraints>\n         <children>\n            <ListView fx:id=\"SelectedToppingsListView\" maxHeight=\"175.0\" maxWidth=\"200.0\" minHeight=\"100.0\" minWidth=\"100.0\" prefHeight=\"100.0\" prefWidth=\"100.0\" GridPane.columnIndex=\"2\" GridPane.halignment=\"CENTER\" GridPane.rowIndex=\"1\" GridPane.valignment=\"BOTTOM\">\n               <GridPane.margin>\n                  <Insets bottom=\"15.0\" />\n               </GridPane.margin>\n            </ListView>\n            <Label text=\"Selected Toppings\" textAlignment=\"CENTER\" underline=\"true\" GridPane.columnIndex=\"2\" GridPane.halignment=\"CENTER\" GridPane.rowIndex=\"1\" GridPane.valignment=\"TOP\">\n               <GridPane.margin>\n                  <Insets bottom=\"20.0\" left=\"20.0\" right=\"20.0\" top=\"20.0\" />\n               </GridPane.margin>\n               <font>\n                  <Font name=\"Baloo Bhai 2 Bold\" size=\"18.0\" />\n               </font>\n            </Label>\n            <ComboBox fx:id=\"TypeComboBox\" prefWidth=\"150.0\" promptText=\"Select Type\" GridPane.halignment=\"RIGHT\" GridPane.valignment=\"TOP\">\n               <GridPane.margin>\n                  <Insets top=\"3.0\" />\n               </GridPane.margin>\n            </ComboBox>\n            <Label text=\"Type:\" GridPane.valignment=\"TOP\">\n               <font>\n                  <Font name=\"Baloo 2 Regular\" size=\"18.0\" />\n               </font>\n               <GridPane.margin>\n                  <Insets />\n               </GridPane.margin>\n               <padding>\n                  <Insets left=\"20.0\" />\n               </padding>\n            </Label>\n            <RadioButton fx:id=\"LRadioButton\" mnemonicParsing=\"false\" onMouseClicked=\"#largeSelected\" text=\"Large\" GridPane.halignment=\"LEFT\" GridPane.valignment=\"TOP\">\n               <GridPane.margin>\n                  <Insets left=\"80.0\" top=\"40.0\" />\n               </GridPane.margin></RadioButton>\n            <RadioButton fx:id=\"MRadioButton\" mnemonicParsing=\"false\" onMouseClicked=\"#mediumSelected\" text=\"Medium\" GridPane.halignment=\"LEFT\" GridPane.valignment=\"TOP\">\n               <GridPane.margin>\n                  <Insets left=\"80.0\" top=\"65.0\" />\n               </GridPane.margin>\n            </RadioButton>\n            <RadioButton fx:id=\"SRadioButton\" mnemonicParsing=\"false\" onMouseClicked=\"#smallSelected\" text=\"Small\" GridPane.halignment=\"LEFT\" GridPane.valignment=\"TOP\">\n               <GridPane.margin>\n                  <Insets left=\"80.0\" top=\"90.0\" />\n               </GridPane.margin>\n            </RadioButton>\n            <Label text=\"Size:\" GridPane.halignment=\"LEFT\" GridPane.valignment=\"TOP\">\n               <font>\n                  <Font name=\"Baloo 2 Regular\" size=\"18.0\" />\n               </font>\n               <padding>\n                  <Insets left=\"20.0\" />\n               </padding>\n               <GridPane.margin>\n                  <Insets left=\"6.0\" top=\"57.0\" />\n               </GridPane.margin>\n            </Label>\n            <ListView fx:id=\"AvailableToppingsListView\" maxHeight=\"175.0\" maxWidth=\"200.0\" minHeight=\"100.0\" minWidth=\"100.0\" prefHeight=\"100.0\" prefWidth=\"100.0\" GridPane.halignment=\"CENTER\" GridPane.rowIndex=\"1\" GridPane.valignment=\"BOTTOM\">\n               <GridPane.margin>\n                  <Insets bottom=\"15.0\" />\n               </GridPane.margin>\n            </ListView>\n            <Label text=\"Available Toppings\" textAlignment=\"CENTER\" underline=\"true\" GridPane.halignment=\"CENTER\" GridPane.rowIndex=\"1\" GridPane.valignment=\"TOP\">\n               <font>\n                  <Font name=\"Baloo Bhai 2 Bold\" size=\"18.0\" />\n               </font>\n               <GridPane.margin>\n                  <Insets bottom=\"20.0\" left=\"20.0\" right=\"20.0\" top=\"20.0\" />\n               </GridPane.margin>\n            </Label>\n            <Label text=\"Crust:\" GridPane.valignment=\"BOTTOM\">\n               <font>\n                  <Font name=\"Baloo 2 Regular\" size=\"18.0\" />\n               </font>\n               <GridPane.margin>\n                  <Insets left=\"15.0\" />\n               </GridPane.margin>\n            </Label>\n            <TextField fx:id=\"CrustTextField\" maxWidth=\"150.0\" prefWidth=\"150.0\" GridPane.halignment=\"RIGHT\" GridPane.valignment=\"BOTTOM\" />\n            <Button fx:id=\"AddToppingsButton\" mnemonicParsing=\"false\" text=\"Add\" GridPane.columnIndex=\"1\" GridPane.halignment=\"CENTER\" GridPane.rowIndex=\"1\">\n               <GridPane.margin>\n                  <Insets bottom=\"50.0\" />\n               </GridPane.margin>\n            </Button>\n            <Button fx:id=\"RemoveToppingsButton\" mnemonicParsing=\"false\" text=\"Remove\" GridPane.columnIndex=\"1\" GridPane.halignment=\"CENTER\" GridPane.rowIndex=\"1\">\n               <GridPane.margin>\n                  <Insets top=\"50.0\" />\n               </GridPane.margin>\n            </Button>\n            <ImageView fx:id=\"CSPizzaImage\" fitHeight=\"100.0\" fitWidth=\"213.0\" pickOnBounds=\"true\" preserveRatio=\"true\" GridPane.columnIndex=\"2\" GridPane.halignment=\"RIGHT\" GridPane.valignment=\"TOP\" />\n            <Button fx:id=\"AddToOrderButton\" mnemonicParsing=\"false\" text=\"Add To Order\" GridPane.columnIndex=\"2\" GridPane.halignment=\"LEFT\" GridPane.valignment=\"BOTTOM\">\n               <GridPane.margin>\n                  <Insets left=\"8.0\" />\n               </GridPane.margin>\n            </Button>\n            <TextField fx:id=\"TotalPriceTextField\" maxWidth=\"100.0\" minWidth=\"80.0\" prefWidth=\"100.0\" promptText=\"Total Price\" GridPane.columnIndex=\"2\" GridPane.halignment=\"RIGHT\" GridPane.valignment=\"BOTTOM\">\n               <GridPane.margin>\n                  <Insets right=\"8.0\" />\n               </GridPane.margin>\n            </TextField>\n         </children>\n      </GridPane>\n   </children>\n</VBox>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/com/example/project4rupizzeria/chicago-pizza-view.fxml b/src/main/resources/com/example/project4rupizzeria/chicago-pizza-view.fxml
+--- a/src/main/resources/com/example/project4rupizzeria/chicago-pizza-view.fxml	(revision 96640e242a4d597efe1a19d580120bc6edb679e7)
++++ b/src/main/resources/com/example/project4rupizzeria/chicago-pizza-view.fxml	(date 1731814562767)
+@@ -16,33 +16,33 @@
+ 
+ <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: ffeed2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project4rupizzeria.ChicagoPizzaController">
+    <children>
+-      <Label alignment="TOP_LEFT" text="Chicago Style Pizza" underline="true">
++      <Label alignment="TOP_LEFT" prefHeight="46.0" prefWidth="311.0" text="Chicago Style Pizza" underline="true">
+          <font>
+             <Font name="Baloo Bhai 2 Bold" size="36.0" />
+          </font>
+          <VBox.margin>
+-            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
++            <Insets bottom="5.0" left="25.0" right="25.0" top="25.0" />
+          </VBox.margin>
+       </Label>
+-      <GridPane prefHeight="419.0" prefWidth="500.0">
++      <GridPane prefHeight="397.0" prefWidth="500.0">
+         <columnConstraints>
+           <ColumnConstraints hgrow="SOMETIMES" maxWidth="267.88909912109375" minWidth="10.0" prefWidth="216.9585723876953" />
+-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="3.11090087890625" prefWidth="67.54142761230469" />
+-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="216.61141967773438" />
++            <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="3.11090087890625" prefWidth="68.0" />
++          <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="216.0" />
+         </columnConstraints>
+         <rowConstraints>
+-          <RowConstraints maxHeight="187.0" minHeight="10.0" prefHeight="142.43002319335938" vgrow="SOMETIMES" />
+-          <RowConstraints maxHeight="336.0" minHeight="10.0" prefHeight="245.06997680664062" vgrow="SOMETIMES" />
++          <RowConstraints maxHeight="187.0" minHeight="10.0" prefHeight="164.5" vgrow="SOMETIMES" />
++          <RowConstraints maxHeight="336.0" minHeight="10.0" prefHeight="232.5" vgrow="SOMETIMES" />
+         </rowConstraints>
+          <children>
+             <ListView fx:id="SelectedToppingsListView" maxHeight="175.0" maxWidth="200.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                <GridPane.margin>
+-                  <Insets bottom="15.0" />
++                  <Insets bottom="5.0" />
+                </GridPane.margin>
+             </ListView>
+             <Label text="Selected Toppings" textAlignment="CENTER" underline="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                <GridPane.margin>
+-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
++                  <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                </GridPane.margin>
+                <font>
+                   <Font name="Baloo Bhai 2 Bold" size="18.0" />
+@@ -64,18 +64,18 @@
+                   <Insets left="20.0" />
+                </padding>
+             </Label>
+-            <RadioButton fx:id="LRadioButton" mnemonicParsing="false" onMouseClicked="#largeSelected" text="Large" GridPane.halignment="LEFT" GridPane.valignment="TOP">
++            <RadioButton fx:id="LRadioButton" mnemonicParsing="false" onMouseClicked="#largeSelected" selected="true" text="Large" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                <GridPane.margin>
+-                  <Insets left="80.0" top="40.0" />
++                  <Insets left="80.0" top="48.0" />
+                </GridPane.margin></RadioButton>
+             <RadioButton fx:id="MRadioButton" mnemonicParsing="false" onMouseClicked="#mediumSelected" text="Medium" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                <GridPane.margin>
+-                  <Insets left="80.0" top="65.0" />
++                  <Insets left="80.0" top="78.0" />
+                </GridPane.margin>
+             </RadioButton>
+             <RadioButton fx:id="SRadioButton" mnemonicParsing="false" onMouseClicked="#smallSelected" text="Small" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                <GridPane.margin>
+-                  <Insets left="80.0" top="90.0" />
++                  <Insets left="80.0" top="108.0" />
+                </GridPane.margin>
+             </RadioButton>
+             <Label text="Size:" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+@@ -86,12 +86,12 @@
+                   <Insets left="20.0" />
+                </padding>
+                <GridPane.margin>
+-                  <Insets left="6.0" top="57.0" />
++                  <Insets left="6.0" top="70.0" />
+                </GridPane.margin>
+             </Label>
+             <ListView fx:id="AvailableToppingsListView" maxHeight="175.0" maxWidth="200.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                <GridPane.margin>
+-                  <Insets bottom="15.0" />
++                  <Insets bottom="5.0" />
+                </GridPane.margin>
+             </ListView>
+             <Label text="Available Toppings" textAlignment="CENTER" underline="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+@@ -99,7 +99,7 @@
+                   <Font name="Baloo Bhai 2 Bold" size="18.0" />
+                </font>
+                <GridPane.margin>
+-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
++                  <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                </GridPane.margin>
+             </Label>
+             <Label text="Crust:" GridPane.valignment="BOTTOM">
+@@ -111,18 +111,18 @@
+                </GridPane.margin>
+             </Label>
+             <TextField fx:id="CrustTextField" maxWidth="150.0" prefWidth="150.0" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
+-            <Button fx:id="AddToppingsButton" mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
++            <Button fx:id="AddToppingsButton" mnemonicParsing="false" onMouseClicked="#addSelectedToppings" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                <GridPane.margin>
+                   <Insets bottom="50.0" />
+                </GridPane.margin>
+             </Button>
+-            <Button fx:id="RemoveToppingsButton" mnemonicParsing="false" text="Remove" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
++            <Button fx:id="RemoveToppingsButton" mnemonicParsing="false" onMouseClicked="#removeSelectedToppings" text="Remove" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                <GridPane.margin>
+                   <Insets top="50.0" />
+                </GridPane.margin>
+             </Button>
+-            <ImageView fx:id="CSPizzaImage" fitHeight="100.0" fitWidth="213.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+-            <Button fx:id="AddToOrderButton" mnemonicParsing="false" text="Add To Order" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
++            <ImageView fx:id="CSPizzaImage" fitHeight="128.0" fitWidth="202.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
++            <Button fx:id="AddToOrderButton" mnemonicParsing="false" onMouseClicked="#addToOrderSelected" text="Add To Order" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+                <GridPane.margin>
+                   <Insets left="8.0" />
+                </GridPane.margin>
+Index: src/main/java/com/example/project4rupizzeria/Deluxe.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.project4rupizzeria;\n\nimport java.util.ArrayList;\n\npublic class Deluxe extends Pizza{\n    private static final double SPRICE = 16.99;\n    private static final double MPRICE = 18.99;\n    private static final double LPRICE = 20.99;\n\n    public Deluxe(ArrayList<Topping> toppings, Crust crust, Size size) {\n        super(toppings, crust, size);\n    }\n\n    @Override\n    public double price() {\n        if(getSize().toString().equals(\"SMALL\")){ return SPRICE;}\n        else if (getSize().toString().equals(\"MEDIUM\")){ return MPRICE;}\n        else if (getSize().toString().equals(\"LARGE\")){ return LPRICE;}\n        else { return 0;}\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/project4rupizzeria/Deluxe.java b/src/main/java/com/example/project4rupizzeria/Deluxe.java
+--- a/src/main/java/com/example/project4rupizzeria/Deluxe.java	(revision 96640e242a4d597efe1a19d580120bc6edb679e7)
++++ b/src/main/java/com/example/project4rupizzeria/Deluxe.java	(date 1731814562754)
+@@ -7,8 +7,8 @@
+     private static final double MPRICE = 18.99;
+     private static final double LPRICE = 20.99;
+ 
+-    public Deluxe(ArrayList<Topping> toppings, Crust crust, Size size) {
+-        super(toppings, crust, size);
++    public Deluxe(ArrayList<Topping> toppings, Crust crust) {
++        super(toppings, crust);
+     }
+ 
+     @Override
