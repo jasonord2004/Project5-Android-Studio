@@ -2,14 +2,14 @@
     <string name="app_name">My Application</string>
     <string name="textView">Hello World!</string>
     <string-array name="itemNames">
-        <item>BBQChicken Chicago-Style Pizza</item>
-        <item>BBQChicken New York-Style Pizza</item>
-        <item>Build-Your-Own Chicago-Style Pizza</item>
-        <item>Build-Your-Own New York-Style Pizza</item>
-        <item>Deluxe Chicago-Style Pizza</item>
-        <item>Deluxe New York-Style Pizza</item>
-        <item>Meatzza Chicago-Style Pizza</item>
-        <item>Meatzza New York-Style Pizza</item>
+        <item>BBQChicken Chicago-Style</item>
+        <item>BBQChicken New York-Style</item>
+        <item>Build-Your-Own Chicago-Style</item>
+        <item>Build-Your-Own New York-Style</item>
+        <item>Deluxe Chicago-Style</item>
+        <item>Deluxe New York-Style</item>
+        <item>Meatzza Chicago-Style</item>
+        <item>Meatzza New York-Style</item>
     </string-array>
     <string name="image_desc">Image of Pizza</string>
     <string name="add_to_cart">Add to Cart</string>
