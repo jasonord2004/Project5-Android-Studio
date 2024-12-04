@@ -3,16 +3,16 @@ package com.example.myapplication;
 public class Item {
     private String itemName;
     private int image;
-    private String unitPrice;
+    private String itemDescription;
 
     public Item(String itemName, int image, String unitPrice){
         this.itemName = itemName;
         this.image = image;
-        this.unitPrice = unitPrice;
+        this.itemDescription = unitPrice;
     }
 
     public String getItemName(){return itemName;}
     public int getImage(){return image;}
-    public String getUnitPrice(){return unitPrice;}
+    public String getItemDescription(){return itemDescription;}
 
 }
