@@ -11,4 +11,6 @@
         <item>Meatzza Chicago-Style Pizza</item>
         <item>Meatzza New York-Style Pizza</item>
     </string-array>
+    <string name="image_desc">Image of Pizza</string>
+    <string name="add_to_cart">Add to Cart</string>
 </resources>
