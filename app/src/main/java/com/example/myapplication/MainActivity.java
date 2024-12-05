@@ -1,6 +1,9 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -27,12 +30,26 @@ public class MainActivity extends AppCompatActivity {
         ItemsAdapter adapter = new ItemsAdapter(this, items);
         rcview.setAdapter(adapter);
         rcview.setLayoutManager(new LinearLayoutManager(this));
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.orderLayout), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        ImageButton addToCart = findViewById(R.id.cartButton);
+        addToCart.setOnClickListener(this::showOrderActivity);
+    }
+
+    protected void onStart(){
+        super.onStart();
+    }
+
+    protected void onResume(){
+        super.onResume();
+    }
+
+    public void showOrderActivity(View view){
+        Intent intent = new Intent(this, OrderActivity.class);
+        startActivity(intent);
     }
 
     private void setupMenuItems(){
