@@ -1,8 +1,6 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         rcview.setAdapter(adapter);
         rcview.setLayoutManager(new LinearLayoutManager(this));
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.subTotal), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.orderLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
