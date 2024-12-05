@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,9 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupMenuItems(){
         String [] itemNames = getResources().getStringArray(R.array.itemNames);
+        String [] itemDescriptions = getResources().getStringArray(R.array.itemDescriptions);
+        String [] itemCrusts = getResources().getStringArray(R.array.itemCrusts);
         for (int i = 0; i < itemNames.length; i++){
             //FIND PRICE through helper method that calculates it
-            items.add(new Item(itemNames[i], itemImages[i], ""));
+            items.add(new Item(itemNames[i], itemImages[i], itemDescriptions[i], itemCrusts[i]));
         }
     }
 

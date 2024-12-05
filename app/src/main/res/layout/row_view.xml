@@ -10,7 +10,6 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFC895"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +18,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFF1DF">
+            android:background="@drawable/border_view">
 
             <ImageView
                 android:id="@+id/im_view"
@@ -37,11 +36,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="24dp"
+                android:fontFamily="sans-serif-smallcaps"
                 android:textAlignment="viewEnd"
                 android:textAllCaps="true"
                 android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/im_view"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,9 +48,27 @@
                 android:id="@+id/pizza_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textColor="@color/black"
+                android:textStyle="italic"
+                android:typeface="normal"
                 app:layout_constraintStart_toStartOf="@id/pizza_type"
                 app:layout_constraintTop_toBottomOf="@id/pizza_type" />
+
+            <TextView
+                android:id="@+id/pizza_crust"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textColor="@color/black"
+                android:textStyle="italic"
+                android:typeface="normal"
+                app:layout_constraintStart_toStartOf="@id/pizza_type"
+                app:layout_constraintTop_toBottomOf="@id/pizza_description" />
 
             <ImageButton
                 android:id="@+id/btn_add"
@@ -61,6 +78,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/rounded_corner"
                 android:contentDescription="@string/add_to_cart"
+                android:scaleType="fitXY"
                 android:src="@android:drawable/ic_menu_add"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
