@@ -1,15 +1,35 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="textView">Hello World!</string>
+    <string name="textView">RU Pizzeria</string>
     <string-array name="itemNames">
-        <item>BBQChicken Chicago-Style</item>
-        <item>BBQChicken New York-Style</item>
+        <item>BBQ Chicken Chicago-Style</item>
+        <item>BBQ Chicken NY-Style</item>
         <item>Build-Your-Own Chicago-Style</item>
-        <item>Build-Your-Own New York-Style</item>
+        <item>Build-Your-Own NY-Style</item>
         <item>Deluxe Chicago-Style</item>
-        <item>Deluxe New York-Style</item>
+        <item>Deluxe NY-Style</item>
         <item>Meatzza Chicago-Style</item>
-        <item>Meatzza New York-Style</item>
+        <item>Meatzza NY-Style</item>
+    </string-array>
+    <string-array name="itemDescriptions">
+        <item>Toppings: Sausage, Pepperoni, Beef,\nHam</item>
+        <item>Toppings: Sausage, Pepperoni, Beef,\nHam</item>
+        <item>Customizable, up to 7 toppings\n+$1.69 per topping</item>
+        <item>Customizable, up to 7 toppings\n+$1.69 per topping</item>
+        <item>Toppings: Sausage, Pepperoni, Green\nPepper, Onion, Mushroom</item>
+        <item>Toppings: Sausage, Pepperoni, Green\nPepper, Onion, Mushroom</item>
+        <item>Toppings: BBQ Chicken, Green Pepper,\nProvolone, Cheddar</item>
+        <item>Toppings: BBQ Chicken, Green Pepper,\nProvolone, Cheddar</item>
+    </string-array>
+    <string-array name="itemCrusts">
+        <item>Crust: Pan</item>
+        <item>Crust: Thin</item>
+        <item>Crust: Pan</item>
+        <item>Crust: Hand-tossed</item>
+        <item>Crust: Deep Dish</item>
+        <item>Crust: Brooklyn</item>
+        <item>Crust: Stuffed</item>
+        <item>Crust: Hand-tossed</item>
     </string-array>
     <string name="image_desc">Image of Pizza</string>
     <string name="add_to_cart">Add to Cart</string>

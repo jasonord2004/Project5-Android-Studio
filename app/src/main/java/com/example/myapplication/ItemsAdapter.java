@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
     public void onBindViewHolder(@NonNull ItemsHolder holder, int position){
         holder.pizza_name.setText(items.get(position).getItemName());
         holder.pizza_description.setText(items.get(position).getItemDescription());
+        holder.pizza_crust.setText(items.get(position).getItemCrust());
         holder.im_view.setImageResource(items.get(position).getImage());
     }
 
@@ -44,7 +46,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
     public int getItemCount(){return items.size();}
 
     public static class ItemsHolder extends RecyclerView.ViewHolder {
-        private TextView pizza_name, pizza_description;
+        private TextView pizza_name, pizza_description, pizza_crust;
         private ImageView im_view;
         private ImageButton btn_add;
         private ConstraintLayout parentLayout;
@@ -54,6 +56,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
             super(itemView);
             pizza_name = itemView.findViewById(R.id.pizza_type);
             pizza_description = itemView.findViewById(R.id.pizza_description);
+            pizza_crust = itemView.findViewById(R.id.pizza_crust);
             im_view = itemView.findViewById(R.id.im_view);
             btn_add = itemView.findViewById(R.id.btn_add);
             parentLayout = itemView.findViewById(R.id.rowLayout);
@@ -67,10 +70,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
             btn_add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //Log.d("Demo", "On Click: Add to Cart MSG ");
                     AlertDialog.Builder alert = new AlertDialog.Builder(itemView.getContext());
                     alert.setTitle("Select a size");
                     alert.setSingleChoiceItems(sizes, checkedItem[0], (dialog, which) -> {
                         checkedItem[0] = which;
+
                         //sizes[which] --> Sets price of pizza somehow
                         //Display Price of pizza
                     });
@@ -84,10 +89,15 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
                         toast.show();
                         dialog.dismiss();
                     });
-
+                    alert.create().show();
                 }
             });
         }
+
+        private void constructPizza(){
+            
+        }
+
     }
 
 }
