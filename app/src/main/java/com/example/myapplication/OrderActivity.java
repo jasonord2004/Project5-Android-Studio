@@ -8,7 +8,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Orders extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class OrderActivity extends AppCompatActivity {
+
+    public static ArrayList<Order> orders = new ArrayList<Order>();
+    public static ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
+    private final double TAX_RATE = 0.06625;
+
+    private int number;
+
+    private double salesTax;
+
+    private double price;
+
+    private double total;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

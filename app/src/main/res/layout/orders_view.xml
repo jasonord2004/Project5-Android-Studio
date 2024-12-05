@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Orders">
+    tools:context=".OrderActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -51,11 +51,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="399dp"
-        android:layout_marginVertical="75dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar2">
 
         <TextView
             android:id="@+id/currentOrder"
@@ -73,8 +73,7 @@
             android:layout_height="250dp"
             android:background="@drawable/border_view"
             android:divider="@color/menu_bar_color"
-            android:dividerHeight="1px"
-            />
+            android:dividerHeight="1px" />
 
         <LinearLayout
             android:layout_width="348dp"
@@ -107,30 +106,112 @@
         </LinearLayout>
 
         <LinearLayout
-            style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/placeOrderBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
-                android:text="@string/placeOrderString"
-                android:background="@drawable/place_order_btn" />
+                android:background="@drawable/place_order_btn"
+                android:text="@string/placeOrderString" />
 
             <Button
                 android:id="@+id/clearOrderBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
-                android:text="@string/clearOrderString"
-                android:background="@drawable/clear_order_btn"/>
+                android:background="@drawable/clear_order_btn"
+                android:text="@string/clearOrderString" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/placeOrderBtn"
+            tools:layout_editor_absoluteX="399dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="10dp">
+
+                <EditText
+                    android:id="@+id/editTextText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:text="Order Number"
+                    android:layout_marginRight="10dp"/>
+
+                <Spinner
+                    android:id="@+id/orderNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown"/>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/placedOrderList"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@drawable/border_view"
+                android:divider="@color/menu_bar_color"
+                android:dividerHeight="1px" >
+            </ListView>
+
+            <TextView
+                android:id="@+id/orderTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="Order Total (Tax Included): $0.00"
+                android:layout_gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/confirmOrdersBtn"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:text="Confirm Orders"
+                    android:background="@drawable/place_order_btn"/>
+
+                <Button
+                    android:id="@+id/cancelOrderBtn"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:text="Cancel Order"
+                    android:background="@drawable/clear_order_btn"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
 
     </LinearLayout>
+
+
 
 
 
