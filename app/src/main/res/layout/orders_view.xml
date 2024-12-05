@@ -2,25 +2,52 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/subTotal"
+    android:id="@+id/orderLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Orders">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/menu_bar_color"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/backButton" />
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rounded_corner"
+        android:contentDescription="@string/go_back"
+        android:scaleType="fitXY"
+        android:src="@drawable/back_arrow"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/orderTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/textView"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,40 +55,84 @@
         android:layout_weight="1"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="399dp"
-        android:layout_marginVertical="100dp">
-
+        android:layout_marginVertical="75dp">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/currentOrder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginLeft="15dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/currentOrderString"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <ListView
             android:id="@+id/currentOrderList"
             android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:background="@drawable/border_view"
+            android:divider="@color/menu_bar_color"
+            android:dividerHeight="1px"
             />
+
+        <LinearLayout
+            android:layout_width="348dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/currentOrderList">
+
+            <TextView
+                android:id="@+id/subtotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/subtotalString" />
+
+            <TextView
+                android:id="@+id/salesTax"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/salesTaxString" />
+
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/totalString" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/placeOrderBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/placeOrderString"
+                android:background="@drawable/place_order_btn" />
+
+            <Button
+                android:id="@+id/clearOrderBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/clearOrderString"
+                android:background="@drawable/clear_order_btn"/>
+        </LinearLayout>
+
+
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/subtotal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/textview" />
-
-        <TextView
-            android:id="@+id/salesTax"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

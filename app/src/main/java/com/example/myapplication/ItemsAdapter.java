@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -65,37 +66,67 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
         }
 
         private void setAddButtonOnClick(@NonNull View itemView, Context context){
-            final String[] sizes = new String[]{"Large", "Medium", "Small"};
+            final String[] sizes = new String[]{"LARGE", "MEDIUM", "SMALL"};
             final int[] checkedItem = {-1};
             btn_add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //Log.d("Demo", "On Click: Add to Cart MSG ");
-                    AlertDialog.Builder alert = new AlertDialog.Builder(itemView.getContext());
-                    alert.setTitle("Select a size");
-                    alert.setSingleChoiceItems(sizes, checkedItem[0], (dialog, which) -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
+                    builder.setTitle("Select a size");
+                    TextView input = new TextView(context);
+                    builder.setView(input);
+                    Pizza pizza = constructPizza();
+                    builder.setSingleChoiceItems(sizes, checkedItem[0], (dialog, which) -> {
                         checkedItem[0] = which;
-
-                        //sizes[which] --> Sets price of pizza somehow
-                        //Display Price of pizza
+                        pizza.setSize(Size.valueOf(sizes[checkedItem[0]]));
+                        String price = String.valueOf(pizza.price());
+                        input.setText(String.format("\t Price: " + price));
                     });
-                    alert.setNegativeButton("Cancel", (dialog, which) -> {});
-                    alert.setPositiveButton("Add to Order", (dialog, which) -> {
+                    builder.setNegativeButton("Cancel", (dialog, which) -> {});
+                    builder.setPositiveButton("Add to Order", null);
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                    alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener((which) -> {
                         //Adds pizza to current order
-                        CharSequence text = "Added to order!";
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                        dialog.dismiss();
+                        String inputText = input.getText().toString();
+                        if(inputText.isBlank()) {
+                            Toast toast = Toast.makeText(context, "Pick a size", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                        else {
+                            checkedItem[0] = -1;
+                            Toast toast = Toast.makeText(context, "Added to order!", Toast.LENGTH_SHORT);
+                            toast.show();
+                            Log.d("Pizza: ", pizza.getCrust().toString()+pizza.getSize().toString()+pizza.getToppings().toString());
+                            alert.dismiss();
+                        }
                     });
-                    alert.create().show();
+                    alert.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener((which) -> {
+                        checkedItem[0] = -1;
+                        alert.dismiss();
+                    });
                 }
             });
         }
 
-        private void constructPizza(){
-            
+        private Pizza constructPizza(){
+            PizzaFactory pizzaFactory = null;
+            Pizza pizza;
+
+            String pizzaName = pizza_name.getText().toString();
+            //System.out.println(pizzaName);
+            if(pizzaName.contains("Chicago")){ pizzaFactory = new ChicagoPizza();}
+            else if (pizzaName.contains("NY")) { pizzaFactory = new NYPizza();}
+
+            if(pizzaName.contains("BBQ Chicken")){ pizza = pizzaFactory.createBBQChicken();}
+            else if(pizzaName.contains("Deluxe")){ pizza = pizzaFactory.createDeluxe();}
+            else if(pizzaName.contains("Meatzza")){ pizza = pizzaFactory.createMeatzza();}
+            else{
+                //Make BuildYourOwn pizza pop up first
+                pizza = pizzaFactory.createBuildYourOwn();
+            }
+            return pizza;
         }
 
     }

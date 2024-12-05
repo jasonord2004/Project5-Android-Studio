@@ -35,4 +35,13 @@
     <string name="add_to_cart">Add to Cart</string>
     <string name="textview">TextView</string>
     <string name="backButton">Button</string>
+    <string name="currentOrder">TextView</string>
+    <string name="Back">Back</string>
+    <string name="go_back">go_back</string>
+    <string name="subtotalString">Subtotal $0.00</string>
+    <string name="salesTaxString">Sales Tax $0.00</string>
+    <string name="currentOrderString">Current Order</string>
+    <string name="totalString">Total $0.00</string>
+    <string name="placeOrderString">Place Order</string>
+    <string name="clearOrderString">Clear Order</string>
 </resources>
