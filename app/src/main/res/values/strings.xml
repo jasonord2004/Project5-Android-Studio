@@ -13,4 +13,6 @@
     </string-array>
     <string name="image_desc">Image of Pizza</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="textview">TextView</string>
+    <string name="backButton">Button</string>
 </resources>
