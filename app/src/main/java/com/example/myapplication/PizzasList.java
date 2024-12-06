@@ -15,6 +15,8 @@ public class PizzasList {
         return pizzasList;
     }
 
+    public void addPizza(Pizza pizza) { pizzas.add(pizza); }
+    public void removePizza(Pizza pizza){ pizzas.remove(pizza); }
     public ArrayList<Pizza> getPizzas() {
         return pizzas;
     }
