@@ -44,4 +44,5 @@
     <string name="totalString">Total $0.00</string>
     <string name="placeOrderString">Place Order</string>
     <string name="clearOrderString">Clear Order</string>
+    <string name="remove_info">(Long press item to remove)</string>
 </resources>
