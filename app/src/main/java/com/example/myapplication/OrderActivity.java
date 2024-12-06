@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.widget.ImageButton;
+import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +14,6 @@ import java.util.ArrayList;
 
 public class OrderActivity extends AppCompatActivity {
 
-    public static ArrayList<Order> orders = new ArrayList<Order>();
-    public static ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
     private final double TAX_RATE = 0.06625;
 
     private int number;
@@ -23,6 +23,10 @@ public class OrderActivity extends AppCompatActivity {
     private double price;
 
     private double total;
+
+    private ImageButton btn_back;
+
+    private ListView currentOrderList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
