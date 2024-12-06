@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -68,5 +69,6 @@ public class OrderActivity extends AppCompatActivity {
         });
 
         pizzas = PizzasList.get().getPizzas();
+        //Log.d("Pizzas: ", pizzas.toString()); //-> Shows the list of pizzas in current order
     }
 }

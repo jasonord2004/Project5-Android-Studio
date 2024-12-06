@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,12 +72,21 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
             btn_add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Log.d("Demo", "On Click: Add to Cart MSG ");
+                    Pizza pizza = constructPizza();
+                    if(pizza instanceof BuildYourOwn){
+                        createToppingsList(pizza);
+                    } else {
+                        createSizeAlert(pizza);
+                    }
+                }
+
+                private void createSizeAlert(Pizza pizza){
                     AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
                     builder.setTitle("Select a size");
+                    final View customLayout = LayoutInflater.from(context).inflate(R.layout.alert_view, null);
+                    builder.setView(customLayout);
                     TextView input = new TextView(context);
                     builder.setView(input);
-                    Pizza pizza = constructPizza();
                     builder.setSingleChoiceItems(sizes, checkedItem[0], (dialog, which) -> {
                         checkedItem[0] = which;
                         pizza.setSize(Size.valueOf(sizes[checkedItem[0]]));
@@ -87,26 +97,70 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
                     builder.setPositiveButton("Add to Order", null);
                     AlertDialog alert = builder.create();
                     alert.show();
-                    alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener((which) -> {
-                        //Adds pizza to current order
-                        String inputText = input.getText().toString();
-                        if(inputText.isBlank()) {
-                            Toast toast = Toast.makeText(context, "Pick a size", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                        else {
-                            checkedItem[0] = -1;
-                            Toast toast = Toast.makeText(context, "Added to order!", Toast.LENGTH_SHORT);
-                            toast.show();
-                            Log.d("Pizza: ", pizza.getCrust().toString()+pizza.getSize().toString()+pizza.getToppings().toString());
-                            alert.dismiss();
-                        }
+                    alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener((which) -> {addToOrderClicked(which, alert, input, pizza);
                     });
                     alert.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener((which) -> {
                         checkedItem[0] = -1;
                         alert.dismiss();
                     });
                 }
+                private void addToOrderClicked(View view, AlertDialog alert, TextView input, Pizza pizza){
+                    //Adds pizza to current order
+                    String inputText = input.getText().toString();
+                    if(inputText.isBlank()) {
+                        Toast toast = Toast.makeText(context, "Pick a size", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                    else {
+                        checkedItem[0] = -1;
+                        Toast toast = Toast.makeText(context, "Added to order!", Toast.LENGTH_SHORT);
+                        toast.show();
+                        alert.dismiss();
+                        //Add pizza to order list in singleton class
+                        PizzasList.get().getPizzas().add(pizza);
+                    }
+                }
+
+                private void createToppingsList(Pizza pizza){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
+                    builder.setTitle("Select Toppings");
+                    final View customLayout = LayoutInflater.from(context).inflate(R.layout.alert_view, null);
+                    builder.setView(customLayout);
+                    TextView input = new TextView(context);
+                    builder.setView(input);
+                    Topping[] toppings = Topping.values();
+                    String[] toppingsList = new String[toppings.length];
+                    for (int i = 0; i<toppings.length; i++){
+                        toppingsList[i] = toppings[i].toString();
+                    }
+                    ArrayList<Integer> checkedIndex = new ArrayList<Integer>();
+                    builder.setMultiChoiceItems(toppingsList, null, ((dialog, which, isChecked) -> {
+                        if (isChecked) {
+                            checkedIndex.add(which);
+                        } else if (checkedIndex.contains(which)){
+                            checkedIndex.remove(checkedIndex.get(which));
+                        }
+                        //Fix magic number
+                        String toppingsAdded = String.valueOf("+$" + (checkedIndex.size()*1.69));
+                        input.setText(toppingsAdded);
+                    }));
+                    builder.setNegativeButton("Cancel", (dialog, which) -> {});
+                    builder.setPositiveButton("Add to Pizza", null);
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                    alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener((which) -> {
+                        alert.dismiss();
+                        for (String topping : toppingsList){
+                            pizza.addTopping(Topping.valueOf(topping));
+                        }
+                        createSizeAlert(pizza);
+                    });
+                    alert.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener((which) -> {
+                        checkedItem[0] = -1;
+                        alert.dismiss();
+                    });
+                }
+
             });
         }
 
