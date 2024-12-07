@@ -161,9 +161,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
                  * @param pizza - The chosen type of pizza
                  */
                 private void createSizeAlert(Pizza pizza){
-                    final View customLayout = LayoutInflater.from(context).inflate(R.layout.alert_view, null);
                     AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
                     builder.setTitle("Select a size");
+                    final View customLayout = LayoutInflater.from(context).inflate(R.layout.alert_view, null);
                     builder.setView(customLayout);
                     TextView input = new TextView(context);
                     builder.setView(input);
@@ -215,9 +215,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
                  * @param pizza - The Build Your Own pizza
                  */
                 private void createToppingsList(Pizza pizza){
-                    final View customLayout = LayoutInflater.from(context).inflate(R.layout.alert_view, null);
                     AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
                     builder.setTitle("Select Toppings");
+                    final View customLayout = LayoutInflater.from(context).inflate(R.layout.alert_view, null);
                     builder.setView(customLayout);
                     TextView input = new TextView(context);
                     builder.setView(input);
