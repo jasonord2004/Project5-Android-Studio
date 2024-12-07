@@ -52,8 +52,7 @@ public class CustomListAdapter extends BaseAdapter {
         TextView pizzaPrice = (TextView) convertView.findViewById(R.id.pizza_price);
         TextView info = (TextView) convertView.findViewById(R.id.remove_info);
         ImageView imageType = (ImageView) convertView.findViewById(R.id.im_view);
-
-        pizzaType.setText(pizzasList.get(position));
+        pizzaType.setText(getPizzaName(pizzasList.get(position)));
         pizzaSize.setText(pizzasList.get(position).getSize().toString());
         pizzaPrice.setText(String.format("%.02f", pizzasList.get(position).price()));
         info.setText("(Long press item to remove)");

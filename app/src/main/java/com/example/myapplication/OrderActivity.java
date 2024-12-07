@@ -73,10 +73,11 @@ public class OrderActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        orders = OrdersList.get().getOrders();
+        pizzas = PizzasList.get().getPizzas();
         if (orders.isEmpty()) number = 1;
         String currentOrderNumberDisplay = "Current Order " + number;
         currentOrder.setText(currentOrderNumberDisplay);
-        pizzas = PizzasList.get().getPizzas();
         pizzaImages = new ArrayList<Integer>();
         setPizzaImages();
         currentOrderList = (ListView) findViewById(R.id.currentOrderList);
@@ -109,8 +110,6 @@ public class OrderActivity extends AppCompatActivity {
 
         placeOrderBtn.setOnClickListener(this::placeOrder);
         clearOrderBtn.setOnClickListener(this::defaultCurrentOrderDisplay);
-
-        orders = OrdersList.get().getOrders();
     }
 
     public void placeOrder(View view){

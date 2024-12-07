@@ -14,9 +14,6 @@ public class OrdersList {
         }
         return ordersList;
     }
-
-    public void addOrder(Order order) { orders.add(order); }
-    public void removeOrder(Order order){ orders.remove(order); }
     public ArrayList<Order> getOrders(){ return orders; }
 
 
