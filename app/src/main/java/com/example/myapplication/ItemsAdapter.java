@@ -138,7 +138,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
                         if (isChecked) {
                             checkedIndex.add(which);
                         } else if (checkedIndex.contains(which)){
-                            checkedIndex.remove(checkedIndex.get(which));
+                            int index = checkedIndex.indexOf(which);
+                            checkedIndex.remove(index);
                         }
                         //Fix magic number
                         String toppingsAdded = String.valueOf("+$" + (checkedIndex.size()*1.69));

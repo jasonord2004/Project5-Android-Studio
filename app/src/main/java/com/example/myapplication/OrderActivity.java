@@ -114,7 +114,7 @@ public class OrderActivity extends AppCompatActivity {
         });
 
         placeOrderBtn = (Button) findViewById(R.id.placeOrderBtn);
-        clearOrderBtn = (Button) findViewById(R.id.placeOrderBtn)
+        clearOrderBtn = (Button) findViewById(R.id.placeOrderBtn);
         placeOrderBtn.setOnClickListener(this::placeOrder);
         clearOrderBtn.setOnClickListener(this::defaultCurrentOrderDisplay);
     }
