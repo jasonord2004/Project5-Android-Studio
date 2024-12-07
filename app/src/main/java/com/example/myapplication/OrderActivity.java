@@ -85,6 +85,10 @@ public class OrderActivity extends AppCompatActivity {
 
     private int selectedNumber;
 
+    private ArrayList<Pizza> selectedPizzas;
+
+    private ArrayList<Integer> selectedImages;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,6 +139,9 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
+        selectedPizzas = new ArrayList<Pizza>();
+        selectedImages = new ArrayList<Integer>();
+        selectedListAdapter = new CustomListAdapter(getApplicationContext(), selectedPizzas, selectedImages);
         placeOrderBtn = (Button) findViewById(R.id.placeOrderBtn);
         clearOrderBtn = (Button) findViewById(R.id.clearOrderBtn);
         backBtn = findViewById(R.id.btn_back);
@@ -143,6 +150,7 @@ public class OrderActivity extends AppCompatActivity {
         backBtn.setOnClickListener(this::backBtnClicked);
 
         placedOrderList = findViewById(R.id.placedOrderList);
+        placedOrderList.setAdapter(selectedListAdapter);
         orderTotal = findViewById(R.id.orderTotal);
         setOrderTotal();
         orderNumberBox = findViewById(R.id.orderNumberBox);
@@ -151,11 +159,10 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedNumber = position;
-                ArrayList<Pizza> selectedPizzas = orders.get(position).getPizzas();
-                ArrayList<Integer> selectedImages = new ArrayList<Integer>();
+                selectedPizzas = orders.get(position).getPizzas();
+                selectedImages = new ArrayList<Integer>();
                 setPizzaImages(selectedPizzas, selectedImages);
-                CustomListAdapter selectedListAdapter = new CustomListAdapter(getApplicationContext(), selectedPizzas, selectedImages);
-                placedOrderList.setAdapter(selectedListAdapter);
+                selectedListAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -171,10 +178,26 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     public void confirmOrders(View view){
-        OrdersList.get().getOrders().clear();
-        setOrderTotal();
-        orderNumbers.clear();
-        fillOrderNumberBox();
+        if (orders.size() >= 1) {
+            OrdersList.get().getOrders().clear();
+            setOrderTotal();
+            orderNumbers.clear();
+            fillOrderNumberBox();
+            number = 1;
+            String currentOrderDisplay = "Current Order " + number;
+            currentOrder.setText(currentOrderDisplay);
+//            selectedListAdapter.notifyDataSetChanged();
+        } else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+            builder.setTitle("There are no orders to confirm!");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+        }
     }
 
     public void cancelOrder(View view){
@@ -191,9 +214,12 @@ public class OrderActivity extends AppCompatActivity {
     }
     public void emptyPizzas(){
         if (pizzas.isEmpty()){
-            subTotal.setText("Subtotal: $0.00");
-            salesTax.setText("Sales Tax: $0.00");
-            total.setText("Total: $0.00");
+            String subTotalDefault = "Subtotal: $0.00";
+            String salesTaxDefault = "Sales Tax: $0.00";
+            String totalDefualt = "Total: $0.00";
+            subTotal.setText(subTotalDefault);
+            salesTax.setText(salesTaxDefault);
+            total.setText(totalDefualt);
         } else {
             setSubTotal();
             setTax();
@@ -209,10 +235,12 @@ public class OrderActivity extends AppCompatActivity {
             number += 1;
             String currentOrderDisplay = "Current Order " + number;
             currentOrder.setText(currentOrderDisplay);
-            currentOrderList.setAdapter(new CustomListAdapter(getApplicationContext(), pizzas, pizzaImages));
             Toast toast = Toast.makeText(getApplicationContext(), "Order placed!", Toast.LENGTH_SHORT);
             toast.show();
+
             fillOrderNumberBox();
+            setOrderTotal();
+            selectedListAdapter.notifyDataSetChanged();
         } else{
             AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
             builder.setTitle("There are no pizzas to order!");
@@ -309,12 +337,15 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     private void setOrderTotal(){
-        double price = 0;
-        for (Order order : orders){
-            price += order.getTotalPrice();
+        if (orders.isEmpty()) {
+            String orderTotalDisplay = "Order Total (Tax Included): $0.00";
+            orderTotal.setText(orderTotalDisplay);
         }
-        String orderTotalDisplay = "Order Total (Tax Included): $" + String.format("%.02f", price);
-        orderTotal.setText(orderTotalDisplay);
+        else {
+            String orderTotalDisplay = "Order Total (Tax Included): $" + String.format("%.02f", orders.get(selectedNumber).getTotalPrice());
+            orderTotal.setText(orderTotalDisplay);
+        }
+
     }
 
 
