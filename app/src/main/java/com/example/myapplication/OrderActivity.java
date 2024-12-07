@@ -23,7 +23,11 @@ import androidx.core.view.WindowInsetsCompat;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * @author Ankit Mithbavkar, Jason Ordonez
+ */
 public class OrderActivity extends AppCompatActivity {
+
 
     private CustomListAdapter customListAdapter;
     private ArrayList<Pizza> pizzas;
@@ -89,6 +93,13 @@ public class OrderActivity extends AppCompatActivity {
 
     private ArrayList<Integer> selectedImages;
 
+    /**
+     * Starts it up
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -177,6 +188,10 @@ public class OrderActivity extends AppCompatActivity {
         cancelOrdersBtn.setOnClickListener(this::cancelOrder);
     }
 
+    /**
+     * Confirms the orders
+     * @param view - view of screen
+     */
     public void confirmOrders(View view){
         if (orders.size() >= 1) {
             OrdersList.get().getOrders().clear();
@@ -200,6 +215,10 @@ public class OrderActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Cancels order
+     * @param view - screen
+     */
     public void cancelOrder(View view){
         orders.remove(selectedNumber);
         selectedListAdapter.notifyDataSetChanged();
@@ -208,10 +227,17 @@ public class OrderActivity extends AppCompatActivity {
         fillOrderNumberBox();
     }
 
+    /**
+     * Empties orders list
+     */
     public void emptyOrders(){
         if (orders.isEmpty()){ number = 1;}
         else {number = orders.size()+1;}
     }
+
+    /**
+     * Empty all pizzas list
+     */
     public void emptyPizzas(){
         if (pizzas.isEmpty()){
             String subTotalDefault = "Subtotal: $0.00";
@@ -226,6 +252,11 @@ public class OrderActivity extends AppCompatActivity {
             setTotal();
         }
     }
+
+    /**
+     * Places the order into place orders list
+     * @param view - screen
+     */
     public void placeOrder(View view){
         if (pizzas.size() >= 1) {
             Order order = new Order(number, pizzas);
@@ -253,6 +284,11 @@ public class OrderActivity extends AppCompatActivity {
             builder.create().show();
         }
     }
+
+    /**
+     * Default current orders
+     * @param view - screen
+     */
     public void defaultCurrentOrderDisplay(View view){
         PizzasList.get().getPizzas().clear();
         pizzaImages.clear();
@@ -272,6 +308,10 @@ public class OrderActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Go back to Pizza order screen
+     * @param view - screen
+     */
     public void backBtnClicked(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
