@@ -73,6 +73,11 @@ public class OrderActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        currentOrder = (TextView) findViewById(R.id.currentOrder);
+        subTotal = (TextView) findViewById(R.id.subtotal);
+        salesTax = (TextView) findViewById(R.id.salesTax);
+        total = (TextView) findViewById(R.id.total);
+
         orders = OrdersList.get().getOrders();
         pizzas = PizzasList.get().getPizzas();
         if (orders.isEmpty()) number = 1;
@@ -108,6 +113,8 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
+        placeOrderBtn = (Button) findViewById(R.id.placeOrderBtn);
+        clearOrderBtn = (Button) findViewById(R.id.placeOrderBtn)
         placeOrderBtn.setOnClickListener(this::placeOrder);
         clearOrderBtn.setOnClickListener(this::defaultCurrentOrderDisplay);
     }
@@ -116,7 +123,6 @@ public class OrderActivity extends AppCompatActivity {
         if (pizzas.size() >= 1) {
             Order order = new Order(number, pizzas);
             orders.add(order);
-
 
             defaultCurrentOrderDisplay();
             number += 1;
