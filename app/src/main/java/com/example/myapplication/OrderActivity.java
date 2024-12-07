@@ -106,7 +106,7 @@ public class OrderActivity extends AppCompatActivity {
         String currentOrderNumberDisplay = "Current Order " + number;
         currentOrder.setText(currentOrderNumberDisplay);
         pizzaImages = new ArrayList<Integer>();
-        setPizzaImages(pizzas);
+        setPizzaImages(pizzas, pizzaImages);
         currentOrderList = (ListView) findViewById(R.id.currentOrderList);
         customListAdapter = new CustomListAdapter(getApplicationContext(), pizzas, pizzaImages);
         currentOrderList.setAdapter(customListAdapter);
@@ -151,7 +151,7 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedNumber = position;
-                ArrayList<Pizza> selectedPizzas = orders.get(position);
+                ArrayList<Pizza> selectedPizzas = orders.get(position).getPizzas();
                 ArrayList<Integer> selectedImages = new ArrayList<Integer>();
                 setPizzaImages(selectedPizzas, selectedImages);
                 CustomListAdapter selectedListAdapter = new CustomListAdapter(getApplicationContext(), selectedPizzas, selectedImages);
@@ -314,6 +314,7 @@ public class OrderActivity extends AppCompatActivity {
             price += order.getTotalPrice();
         }
         String orderTotalDisplay = "Order Total (Tax Included): $" + String.format("%.02f", price);
+        orderTotal.setText(orderTotalDisplay);
     }
 
 
