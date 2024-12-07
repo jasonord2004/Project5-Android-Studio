@@ -8,7 +8,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,6 +65,8 @@ public class OrderActivity extends AppCompatActivity {
 
     private ArrayList<Order> orders;
 
+    private Spinner orderNumberBox;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +84,10 @@ public class OrderActivity extends AppCompatActivity {
 
         orders = OrdersList.get().getOrders();
         pizzas = PizzasList.get().getPizzas();
-        if (orders.isEmpty()) number = 1;
+        if (orders.isEmpty()){
+            number = 1;
+            defaultCurrentOrderDisplay();
+        }
         String currentOrderNumberDisplay = "Current Order " + number;
         currentOrder.setText(currentOrderNumberDisplay);
         pizzaImages = new ArrayList<Integer>();
@@ -97,7 +104,7 @@ public class OrderActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                pizzas.remove(position);
+                                price -= pizzas.remove(position).price();
                                 customListAdapter.notifyDataSetChanged();
                                 setSubTotal();
                                 setTax();
@@ -129,10 +136,12 @@ public class OrderActivity extends AppCompatActivity {
             String currentOrderDisplay = "Current Order " + number;
             currentOrder.setText(currentOrderDisplay);
 
+            Toast toast = Toast.makeText(getApplicationContext(), "Order placed!", Toast.LENGTH_SHORT);
+            toast.show();
         } else{
             new AlertDialog.Builder(OrderActivity.this)
-            .setTitle("Add pizzas to your order!")
-                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+            .setTitle("There are no pizzas to order!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -147,7 +156,7 @@ public class OrderActivity extends AppCompatActivity {
         String salesTaxDisplay = "Sales Tax: $0.00";
         salesTax.setText(salesTaxDisplay);
         String totalDisplay = "Total: $0.00";
-
+        total.setText(salesTaxDisplay);
         customListAdapter.notifyDataSetChanged();
     }
     private void defaultCurrentOrderDisplay(){

@@ -88,24 +88,21 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="sans-serif-black"
-                android:text="@string/subtotalString" />
+                android:fontFamily="sans-serif-black" />
 
             <TextView
                 android:id="@+id/salesTax"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="sans-serif-black"
-                android:text="@string/salesTaxString" />
+                android:fontFamily="sans-serif-black" />
 
             <TextView
                 android:id="@+id/total"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="sans-serif-black"
-                android:text="@string/totalString" />
+                android:fontFamily="sans-serif-black"/>
         </LinearLayout>
 
         <LinearLayout
@@ -162,8 +159,8 @@
                     android:textColor="@color/black"
                     android:fontFamily="sans-serif-black"
                     android:textSize="20sp"
-                    android:text="Order Number:"
-                    android:layout_marginRight="10dp"/>
+                    android:text="@string/orderNumberString"
+                    android:layout_marginEnd="10dp"/>
 
                 <Spinner
                     android:id="@+id/orderNumberBox"
@@ -171,7 +168,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"/>
+                    android:spinnerMode="dropdown"
+                    android:layout_marginRight="10dp"/>
             </LinearLayout>
 
             <ListView

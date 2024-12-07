@@ -45,4 +45,8 @@
     <string name="placeOrderString">Place Order</string>
     <string name="clearOrderString">Clear Order</string>
     <string name="remove_info">(Long press item to remove)</string>
+    <string name="orderNumberString">Order Number:</string>
+    <string-array name="orderNumbers">
+        
+    </string-array>
 </resources>
