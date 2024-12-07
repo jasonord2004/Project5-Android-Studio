@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -63,6 +64,8 @@ public class OrderActivity extends AppCompatActivity {
 
     private Button clearOrderBtn;
 
+    private ImageButton backBtn;
+
     private ArrayList<Order> orders;
 
     private Spinner orderNumberBox;
@@ -84,10 +87,8 @@ public class OrderActivity extends AppCompatActivity {
 
         orders = OrdersList.get().getOrders();
         pizzas = PizzasList.get().getPizzas();
-        if (orders.isEmpty()){
-            number = 1;
-            defaultCurrentOrderDisplay();
-        }
+        if (orders.isEmpty()){ number = 1;}
+        if (pizzas.isEmpty()){ defaultCurrentOrderDisplay(getLayoutInflater().inflate((R.layout.orders_view), null)); }
         String currentOrderNumberDisplay = "Current Order " + number;
         currentOrder.setText(currentOrderNumberDisplay);
         pizzaImages = new ArrayList<Integer>();
@@ -95,7 +96,6 @@ public class OrderActivity extends AppCompatActivity {
         currentOrderList = (ListView) findViewById(R.id.currentOrderList);
         customListAdapter = new CustomListAdapter(getApplicationContext(), pizzas, pizzaImages);
         currentOrderList.setAdapter(customListAdapter);
-
         currentOrderList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -122,8 +122,10 @@ public class OrderActivity extends AppCompatActivity {
 
         placeOrderBtn = (Button) findViewById(R.id.placeOrderBtn);
         clearOrderBtn = (Button) findViewById(R.id.placeOrderBtn);
+        backBtn = findViewById(R.id.btn_back);
         placeOrderBtn.setOnClickListener(this::placeOrder);
         clearOrderBtn.setOnClickListener(this::defaultCurrentOrderDisplay);
+        backBtn.setOnClickListener(this::backBtnClicked);
     }
 
     public void placeOrder(View view){
@@ -131,7 +133,7 @@ public class OrderActivity extends AppCompatActivity {
             Order order = new Order(number, pizzas);
             orders.add(order);
 
-            defaultCurrentOrderDisplay();
+            defaultCurrentOrderDisplay(view);
             number += 1;
             String currentOrderDisplay = "Current Order " + number;
             currentOrder.setText(currentOrderDisplay);
@@ -139,14 +141,15 @@ public class OrderActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), "Order placed!", Toast.LENGTH_SHORT);
             toast.show();
         } else{
-            new AlertDialog.Builder(OrderActivity.this)
-            .setTitle("There are no pizzas to order!")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+            builder.setTitle("There are no pizzas to order!");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
-                    }).create().show();
+                    });
+            builder.create().show();
         }
     }
     public void defaultCurrentOrderDisplay(View view){
@@ -156,18 +159,16 @@ public class OrderActivity extends AppCompatActivity {
         String salesTaxDisplay = "Sales Tax: $0.00";
         salesTax.setText(salesTaxDisplay);
         String totalDisplay = "Total: $0.00";
-        total.setText(salesTaxDisplay);
+        total.setText(totalDisplay);
+        if(customListAdapter == null){
+            return;
+        }
         customListAdapter.notifyDataSetChanged();
     }
-    private void defaultCurrentOrderDisplay(){
-        pizzas = new ArrayList<Pizza>();
-        String subTotalDisplay = "Subtotal: $0.00";
-        subTotal.setText(subTotalDisplay);
-        String salesTaxDisplay = "Sales Tax: $0.00";
-        salesTax.setText(salesTaxDisplay);
-        String totalDisplay = "Total: $0.00";
 
-        customListAdapter.notifyDataSetChanged();
+    public void backBtnClicked(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void setPizzaImages(){
