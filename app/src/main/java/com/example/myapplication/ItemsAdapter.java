@@ -54,6 +54,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
         private ConstraintLayout parentLayout;
         private Context context;
 
+        final private static int MAXTOPPINGS = 7;
+        final private static double TOPPINGPRICE = 1.69;
+
         public ItemsHolder(@NonNull View itemView, Context context){
             super(itemView);
             pizza_name = itemView.findViewById(R.id.pizza_type);
@@ -90,7 +93,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
                     builder.setSingleChoiceItems(sizes, checkedItem[0], (dialog, which) -> {
                         checkedItem[0] = which;
                         pizza.setSize(Size.valueOf(sizes[checkedItem[0]]));
-                        String price = String.valueOf(pizza.price());
+                        String price = String.format("%.02f", pizza.price());
                         input.setText(String.format("\t Price: " + price));
                     });
                     builder.setNegativeButton("Cancel", (dialog, which) -> {});
@@ -142,7 +145,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
                             checkedIndex.remove(index);
                         }
                         //Fix magic number
-                        String toppingsAdded = String.valueOf("+$" + (checkedIndex.size()*1.69));
+                        String toppingsAdded = String.valueOf("Toppings Added: " + checkedIndex.size() + "\n+$" + String.format("%.02f",(checkedIndex.size()*TOPPINGPRICE)));
                         input.setText(toppingsAdded);
                     }));
                     builder.setNegativeButton("Cancel", (dialog, which) -> {});
@@ -150,9 +153,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
                     AlertDialog alert = builder.create();
                     alert.show();
                     alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener((which) -> {
+                        if (checkedIndex.size() > 7){
+                            Toast toast = Toast.makeText(context, "Maximum 7 Toppings!", Toast.LENGTH_LONG);
+                            toast.show();
+                            return;
+                        }
                         alert.dismiss();
-                        for (String topping : toppingsList){
-                            pizza.addTopping(Topping.valueOf(topping));
+                        for (int index : checkedIndex){
+                            pizza.addTopping(Topping.valueOf(toppingsList[index]));
                         }
                         createSizeAlert(pizza);
                     });
