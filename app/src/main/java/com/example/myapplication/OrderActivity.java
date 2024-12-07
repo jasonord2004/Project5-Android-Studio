@@ -84,11 +84,10 @@ public class OrderActivity extends AppCompatActivity {
         subTotal = (TextView) findViewById(R.id.subtotal);
         salesTax = (TextView) findViewById(R.id.salesTax);
         total = (TextView) findViewById(R.id.total);
-
         orders = OrdersList.get().getOrders();
         pizzas = PizzasList.get().getPizzas();
-        if (orders.isEmpty()){ number = 1;}
-        if (pizzas.isEmpty()){ defaultCurrentOrderDisplay(getLayoutInflater().inflate((R.layout.orders_view), null)); }
+        emptyOrders();
+        emptyPizzas();
         String currentOrderNumberDisplay = "Current Order " + number;
         currentOrder.setText(currentOrderNumberDisplay);
         pizzaImages = new ArrayList<Integer>();
@@ -121,13 +120,28 @@ public class OrderActivity extends AppCompatActivity {
         });
 
         placeOrderBtn = (Button) findViewById(R.id.placeOrderBtn);
-        clearOrderBtn = (Button) findViewById(R.id.placeOrderBtn);
+        clearOrderBtn = (Button) findViewById(R.id.clearOrderBtn);
         backBtn = findViewById(R.id.btn_back);
         placeOrderBtn.setOnClickListener(this::placeOrder);
         clearOrderBtn.setOnClickListener(this::defaultCurrentOrderDisplay);
         backBtn.setOnClickListener(this::backBtnClicked);
     }
 
+    public void emptyOrders(){
+        if (orders.isEmpty()){ number = 1;}
+        else {number = orders.size()+1;}
+    }
+    public void emptyPizzas(){
+        if (pizzas.isEmpty()){
+            subTotal.setText("Subtotal: $0.00");
+            salesTax.setText("Sales Tax: $0.00");
+            total.setText("Total: $0.00");
+        } else {
+            setSubTotal();
+            setTax();
+            setTotal();
+        }
+    }
     public void placeOrder(View view){
         if (pizzas.size() >= 1) {
             Order order = new Order(number, pizzas);
@@ -137,7 +151,7 @@ public class OrderActivity extends AppCompatActivity {
             number += 1;
             String currentOrderDisplay = "Current Order " + number;
             currentOrder.setText(currentOrderDisplay);
-
+            currentOrderList.setAdapter(new CustomListAdapter(getApplicationContext(), pizzas, pizzaImages));
             Toast toast = Toast.makeText(getApplicationContext(), "Order placed!", Toast.LENGTH_SHORT);
             toast.show();
         } else{
@@ -153,17 +167,21 @@ public class OrderActivity extends AppCompatActivity {
         }
     }
     public void defaultCurrentOrderDisplay(View view){
-        pizzas = new ArrayList<Pizza>();
+        PizzasList.get().getPizzas().clear();
         String subTotalDisplay = "Subtotal: $0.00";
+        price = 0;
         subTotal.setText(subTotalDisplay);
         String salesTaxDisplay = "Sales Tax: $0.00";
+        tax = 0;
         salesTax.setText(salesTaxDisplay);
         String totalDisplay = "Total: $0.00";
+        totalPrice = 0;
         total.setText(totalDisplay);
         if(customListAdapter == null){
             return;
         }
-        customListAdapter.notifyDataSetChanged();
+        currentOrderList.setAdapter(new CustomListAdapter(getApplicationContext(), pizzas, pizzaImages));
+
     }
 
     public void backBtnClicked(View view){
@@ -217,7 +235,7 @@ public class OrderActivity extends AppCompatActivity {
 
     private void setTotal(){
         totalPrice = price + tax;
-        String display = "Sales Tax: $" + String.format("%.02f", totalPrice);
+        String display = "Total: $" + String.format("%.02f", totalPrice);
         total.setText(display);
     }
 
