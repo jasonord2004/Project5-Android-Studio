@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -19,6 +20,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class OrderActivity extends AppCompatActivity {
@@ -70,6 +72,19 @@ public class OrderActivity extends AppCompatActivity {
 
     private Spinner orderNumberBox;
 
+    private ArrayList<Integer> orderNumbers;
+
+    private ListView placedOrderList;
+
+    private TextView orderTotal;
+    private CustomListAdapter selectedListAdapter;
+
+    private Button confirmOrdersBtn;
+
+    private Button cancelOrdersBtn;
+
+    private int selectedNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +106,7 @@ public class OrderActivity extends AppCompatActivity {
         String currentOrderNumberDisplay = "Current Order " + number;
         currentOrder.setText(currentOrderNumberDisplay);
         pizzaImages = new ArrayList<Integer>();
-        setPizzaImages();
+        setPizzaImages(pizzas);
         currentOrderList = (ListView) findViewById(R.id.currentOrderList);
         customListAdapter = new CustomListAdapter(getApplicationContext(), pizzas, pizzaImages);
         currentOrderList.setAdapter(customListAdapter);
@@ -104,6 +119,7 @@ public class OrderActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 price -= pizzas.remove(position).price();
+                                pizzaImages.remove(position);
                                 customListAdapter.notifyDataSetChanged();
                                 setSubTotal();
                                 setTax();
@@ -125,6 +141,48 @@ public class OrderActivity extends AppCompatActivity {
         placeOrderBtn.setOnClickListener(this::placeOrder);
         clearOrderBtn.setOnClickListener(this::defaultCurrentOrderDisplay);
         backBtn.setOnClickListener(this::backBtnClicked);
+
+        placedOrderList = findViewById(R.id.placedOrderList);
+        orderTotal = findViewById(R.id.orderTotal);
+        setOrderTotal();
+        orderNumberBox = findViewById(R.id.orderNumberBox);
+        fillOrderNumberBox();
+        orderNumberBox.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedNumber = position;
+                ArrayList<Pizza> selectedPizzas = orders.get(position);
+                ArrayList<Integer> selectedImages = new ArrayList<Integer>();
+                setPizzaImages(selectedPizzas, selectedImages);
+                CustomListAdapter selectedListAdapter = new CustomListAdapter(getApplicationContext(), selectedPizzas, selectedImages);
+                placedOrderList.setAdapter(selectedListAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        confirmOrdersBtn = findViewById(R.id.confirmOrdersBtn);
+        cancelOrdersBtn = findViewById(R.id.cancelOrderBtn);
+        confirmOrdersBtn.setOnClickListener(this::confirmOrders);
+        cancelOrdersBtn.setOnClickListener(this::cancelOrder);
+    }
+
+    public void confirmOrders(View view){
+        OrdersList.get().getOrders().clear();
+        setOrderTotal();
+        orderNumbers.clear();
+        fillOrderNumberBox();
+    }
+
+    public void cancelOrder(View view){
+        orders.remove(selectedNumber);
+        selectedListAdapter.notifyDataSetChanged();
+        orderNumbers.remove(selectedNumber);
+        setOrderTotal();
+        fillOrderNumberBox();
     }
 
     public void emptyOrders(){
@@ -154,6 +212,7 @@ public class OrderActivity extends AppCompatActivity {
             currentOrderList.setAdapter(new CustomListAdapter(getApplicationContext(), pizzas, pizzaImages));
             Toast toast = Toast.makeText(getApplicationContext(), "Order placed!", Toast.LENGTH_SHORT);
             toast.show();
+            fillOrderNumberBox();
         } else{
             AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
             builder.setTitle("There are no pizzas to order!");
@@ -168,6 +227,7 @@ public class OrderActivity extends AppCompatActivity {
     }
     public void defaultCurrentOrderDisplay(View view){
         PizzasList.get().getPizzas().clear();
+        pizzaImages.clear();
         String subTotalDisplay = "Subtotal: $0.00";
         price = 0;
         subTotal.setText(subTotalDisplay);
@@ -189,7 +249,7 @@ public class OrderActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void setPizzaImages(){
+    private void setPizzaImages(ArrayList<Pizza> pizzas, ArrayList<Integer> pizzaImages){
         for (Pizza pizza : pizzas){
             pizzaImages.add(getImage(pizza));
         }
@@ -237,6 +297,23 @@ public class OrderActivity extends AppCompatActivity {
         totalPrice = price + tax;
         String display = "Total: $" + String.format("%.02f", totalPrice);
         total.setText(display);
+    }
+
+    private void fillOrderNumberBox(){
+        orderNumbers = new ArrayList<Integer>();
+        for (Order order : orders){
+            orderNumbers.add(order.getNumber());
+        }
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(OrderActivity.this, android.R.layout.simple_spinner_dropdown_item, orderNumbers);
+        orderNumberBox.setAdapter(adapter);
+    }
+
+    private void setOrderTotal(){
+        double price = 0;
+        for (Order order : orders){
+            price += order.getTotalPrice();
+        }
+        String orderTotalDisplay = "Order Total (Tax Included): $" + String.format("%.02f", price);
     }
 
 
