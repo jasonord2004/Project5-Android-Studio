@@ -1,2 +1,2 @@
 # Project5-Android-Studio
- RU-Pizzaria - Pizza Ordering App
+ RU-Pizzeria - Pizza Ordering App
